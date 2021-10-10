@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W6H9QV_HFT_2021221.Client",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W6H9QV_HFT_2021221.Models", "W6H9QV_HFT_2021221.Models\W6H9QV_HFT_2021221.Models.csproj", "{5CF53E9A-EFAD-4D6F-8D34-371682C855BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{51CB0D7A-5C14-42DE-AA18-8A4599054753}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
