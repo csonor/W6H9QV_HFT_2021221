@@ -100,6 +100,7 @@ namespace W6H9QV_HFT_2021221.Data
 
 			modelBuilder.Entity<Driver>().HasData(ham, bot, ver, per, nor, ric, str, vet, oco, alo, sai, lec, tsu, gas, rai, gio, maz, msc, rus, lat);
 			modelBuilder.Entity<Team>().HasData(merc, rbr, mcl, ast, alp, fer, alphat, alfar, wil, haas);
+			modelBuilder.Entity<Race>().HasData(r0, r1, r2, r3, r4, r5);
 		}
 	}
 }
