@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,28 +33,45 @@ namespace W6H9QV_HFT_2021221.Models
 		[Required]
 		[ToString]
 		[ForeignKey(nameof(Driver))]
-		public int FirstPlaceID { get; set; }
+		public string FirstPlaceID { get => FirstPlaceID; set => FirstPlaceID = value.ToUpper(); }
 
 		[Required]
 		[ToString]
 		[ForeignKey(nameof(Driver))]
-		public int SecondPlaceID { get; set; }
+		public string SecondPlaceID { get => SecondPlaceID; set => SecondPlaceID = value.ToUpper(); }
 
 		[Required]
 		[ToString]
 		[ForeignKey(nameof(Driver))]
-		public int ThirdPlaceID { get; set; }
+		public string ThirdPlaceID { get => ThirdPlaceID; set => ThirdPlaceID = value.ToUpper(); }
 
 		[Required]
 		[ToString]
 		[ForeignKey(nameof(Driver))]
-		public int PolePositionID { get; set; }
+		public string PolePositionID { get => PolePositionID; set => PolePositionID = value.ToUpper(); }
 
 		[Required]
 		[ToString]
 		[ForeignKey(nameof(Team))]
 		public int WinningConstructorID { get; set; }
 
+		public TimeSpan LapRecord { get; set; }
+
 		public Weather Weather { get; set; }
+
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in this.GetType().GetProperties().Where(x =>
+			   x.GetCustomAttribute<ToStringAttribute>() != null))
+			{
+				x += "   ";
+				x += item.Name + "\t=> ";
+				x += item.GetValue(this);
+				x += "\n";
+			}
+			return x;
+		}
 	}
 }
