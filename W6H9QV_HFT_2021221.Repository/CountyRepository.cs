@@ -72,14 +72,14 @@ namespace W6H9QV_HFT_2021221.Repository
 			ctx.SaveChanges();
 		}
 
-		public void DeleteCountyBy(int id)
+		public void DeleteBy(int id)
 		{
 			var toDel = GetBy(id);
 			ctx.Remove(toDel);
 			ctx.SaveChanges();
 		}
 
-		public void DeleteCountyBy(string name)
+		public void DeleteBy(string name)
 		{
 			var toDel = GetBy(name);
 			ctx.Remove(toDel);
