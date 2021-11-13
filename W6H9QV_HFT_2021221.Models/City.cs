@@ -16,6 +16,7 @@ namespace W6H9QV_HFT_2021221.Models
 		[ToString]
 		public int ID { get; set; }
 
+		[Required]
 		[ToString]
 		public string Name { get; set; }
 
