@@ -10,12 +10,6 @@ namespace W6H9QV_HFT_2021221.Repository
 		{
 		}
 
-		public void AddNewCountry(Country country)
-		{
-			ctx.Add(country);
-			ctx.SaveChanges();
-		}
-
 		public void ChangeCode(int id, string newCode)
 		{
 			var country = GetBy(id);
@@ -58,45 +52,31 @@ namespace W6H9QV_HFT_2021221.Repository
 			ctx.SaveChanges();
 		}
 
-		public void ChangeName(int id, string newName)
+		public override void ChangeName(int id, string newName)
 		{
 			var country = GetBy(id);
 			country.Name = newName;
 			ctx.SaveChanges();
 		}
 
-		public void ChangeName(string name, string newName)
+		public override void ChangeName(string name, string newName)
 		{
 			var country = GetBy(name);
 			country.Name = newName;
 			ctx.SaveChanges();
 		}
 
-		public void ChangePopulation(int id, int newPopulation)
+		public override void ChangePopulation(int id, int newPopulation)
 		{
 			var country = GetBy(id);
 			country.Population = newPopulation;
 			ctx.SaveChanges();
 		}
 
-		public void ChangePopulation(string name, int newPopulation)
+		public override void ChangePopulation(string name, int newPopulation)
 		{
 			var country = GetBy(name);
 			country.Population = newPopulation;
-			ctx.SaveChanges();
-		}
-
-		public void DeleteBy(int id)
-		{
-			var toDel = GetBy(id);
-			ctx.Remove(toDel);
-			ctx.SaveChanges();
-		}
-
-		public void DeleteBy(string name)
-		{
-			var toDel = GetBy(name);
-			ctx.Remove(toDel);
 			ctx.SaveChanges();
 		}
 
@@ -110,15 +90,15 @@ namespace W6H9QV_HFT_2021221.Repository
 			return GetAll().SingleOrDefault(x => x.Name == name);
 		}
 
-		public void UpdateCountry(Country country)
+		public override void Update(Country type)
 		{
-			var toUpdate = GetBy(country.ID);
-			toUpdate.Name = country.Name;
-			toUpdate.Population = country.Population;
-			toUpdate.CountryCode = country.CountryCode;
-			toUpdate.Currency = country.Currency;
-			toUpdate.DrivingSide = country.DrivingSide;
-			toUpdate.EnglishName = country.EnglishName;
+			var toUpdate = GetBy(type.ID);
+			toUpdate.Name = type.Name;
+			toUpdate.Population = type.Population;
+			toUpdate.CountryCode = type.CountryCode;
+			toUpdate.Currency = type.Currency;
+			toUpdate.DrivingSide = type.DrivingSide;
+			toUpdate.EnglishName = type.EnglishName;
 			ctx.SaveChanges();
 		}
 	}

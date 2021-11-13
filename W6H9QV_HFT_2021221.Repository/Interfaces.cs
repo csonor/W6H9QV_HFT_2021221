@@ -9,6 +9,8 @@ namespace W6H9QV_HFT_2021221.Repository
 		T GetBy(string name);
 		IQueryable<T> GetAll();
 
+		void AddNew(T type);
+
 		void ChangeName(int id, string newName);
 		void ChangeName(string name, string newName);
 
@@ -17,12 +19,12 @@ namespace W6H9QV_HFT_2021221.Repository
 
 		void DeleteBy(int id);
 		void DeleteBy(string name);
+
+		void Update(T type);
 	}
 
 	public interface ICountryRepository : IRepository<Country>
 	{
-		void AddNewCountry(Country country);
-
 		void ChangeEnglishName(int id, string newName);
 		void ChangeEnglishName(string name, string newName);
 
@@ -31,30 +33,20 @@ namespace W6H9QV_HFT_2021221.Repository
 
 		void ChangeCurrency(int id, string newCurrency);
 		void ChangeCurrency(string name, string newCurrency);
-
-		void UpdateCountry(Country country);
 	}
 
 	public interface ICountyRepository : IRepository<County>
 	{
-		void AddNewCounty(County county);
-
 		void ChangeCountySeat(int id, string newSeat);
 		void ChangeCountySeat(string name, string newSeat);
 
 		void ChangeDistricts(int id, int newDistricts);
 		void ChangeDistricts(string name, int newDistricts);
-
-		void UpdateCounty(County county);
 	}
 
 	public interface ICityRepository : IRepository<City>
 	{
-		void AddNewCity(City city);
-
 		void ChangeArea(int id, int newArea);
 		void ChangeArea(string name, int newArea);
-
-		void UpdateCity(City city);
 	}
 }

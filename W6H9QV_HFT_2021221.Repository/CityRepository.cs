@@ -10,12 +10,6 @@ namespace W6H9QV_HFT_2021221.Repository
 		{
 		}
 
-		public void AddNewCity(City city)
-		{
-			ctx.Add(city);
-			ctx.SaveChanges();
-		}
-
 		public void ChangeArea(int id, int newArea)
 		{
 			var city = GetBy(id);
@@ -30,45 +24,31 @@ namespace W6H9QV_HFT_2021221.Repository
 			ctx.SaveChanges();
 		}
 
-		public void ChangeName(int id, string newName)
+		public override void ChangeName(int id, string newName)
 		{
 			var city = GetBy(id);
 			city.Name = newName;
 			ctx.SaveChanges();
 		}
 
-		public void ChangeName(string name, string newName)
+		public override void ChangeName(string name, string newName)
 		{
 			var city = GetBy(name);
 			city.Name = newName;
 			ctx.SaveChanges();
 		}
 
-		public void ChangePopulation(int id, int newPopulation)
+		public override void ChangePopulation(int id, int newPopulation)
 		{
 			var city = GetBy(id);
 			city.Population = newPopulation;
 			ctx.SaveChanges();
 		}
 
-		public void ChangePopulation(string name, int newPopulation)
+		public override void ChangePopulation(string name, int newPopulation)
 		{
 			var city = GetBy(name);
 			city.Population = newPopulation;
-			ctx.SaveChanges();
-		}
-
-		public void DeleteBy(int id)
-		{
-			var toDel = GetBy(id);
-			ctx.Remove(toDel);
-			ctx.SaveChanges();
-		}
-
-		public void DeleteBy(string name)
-		{
-			var toDel = GetBy(name);
-			ctx.Remove(toDel);
 			ctx.SaveChanges();
 		}
 
@@ -82,14 +62,14 @@ namespace W6H9QV_HFT_2021221.Repository
 			return GetAll().SingleOrDefault(x => x.Name == name);
 		}
 
-		public void UpdateCity(City city)
+		public override void Update(City type)
 		{
-			var toUpdate = GetBy(city.ID);
-			toUpdate.Name = city.Name;
-			toUpdate.Population = city.Population;
-			toUpdate.Elevation = city.Elevation;
-			toUpdate.Area = city.Area;
-			toUpdate.CountyID = city.CountyID;
+			var toUpdate = GetBy(type.ID);
+			toUpdate.Name = type.Name;
+			toUpdate.Population = type.Population;
+			toUpdate.Elevation = type.Elevation;
+			toUpdate.Area = type.Area;
+			toUpdate.CountyID = type.CountyID;
 			ctx.SaveChanges();
 		}
 	}
