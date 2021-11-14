@@ -24,7 +24,7 @@ namespace W6H9QV_HFT_2021221.Models
 		public int? Elevation { get; set; }
 
 		/// <summary>
-		/// In quare kilometers
+		/// In square kilometers
 		/// </summary>
 		public double Area { get; set; }
 
