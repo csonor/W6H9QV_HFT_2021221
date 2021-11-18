@@ -40,6 +40,7 @@ namespace W6H9QV_HFT_2021221.Logic
 			this.cityRepo = cityRepo;
 		}
 
+		#region CRUD methods
 		public void AddNewCity(City city)
 		{
 			if (city == null)
@@ -173,5 +174,6 @@ namespace W6H9QV_HFT_2021221.Logic
 
 			cityRepo.Update(city);
 		}
+		#endregion
 	}
 }
