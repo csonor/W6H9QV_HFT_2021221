@@ -40,6 +40,24 @@ namespace W6H9QV_HFT_2021221.Test
 				});
 		}
 
+		[Test]
+		public void CountryWithHighestPopulatedCity_ReturnsCorrectValue()
+		{
+			Assert.That(CountryLogic.CountryWithHighestPopulatedCity(), Is.EqualTo("Österreich"));
+		}
+
+		[Test]
+		public void GetAverageCountyPopulation_ReturnsCorrectValues()
+		{
+			Assert.That(CountyLogic.GetAverageCountyPopulation().Count, Is.EqualTo(CountyLogic.GetCounties().Count));
+		}
+
+		[Test]
+		public void GetAverageCountryPopulation_ReturnsCorrectValues()
+		{
+			Assert.That(CountryLogic.GetAverageCountryPopulation().Count, Is.EqualTo(CountryLogic.GetCountries().Count));
+		}
+
 		#region create and get tests
 		[TestCase(-1)]
 		[TestCase(2000000)]
