@@ -32,6 +32,7 @@ namespace W6H9QV_HFT_2021221.Logic
 		void DeleteCountyBy(string name);
 
 		//TODO non-cruds
+		IEnumerable<CountyAveragePopulation> GetAverageCountyPopulation();
 	}
 
 	public class CountyLogic : ICountyLogic
@@ -43,6 +44,19 @@ namespace W6H9QV_HFT_2021221.Logic
 			this.countyRepo = countyRepo;
 		}
 
+		public IEnumerable<CountyAveragePopulation> GetAverageCountyPopulation()
+		{
+			var q = from x in countyRepo.GetAll()
+					select new CountyAveragePopulation
+					{
+						CountryName = x.Country.Name,
+						Name = x.Name,
+						Avg = x.Cities.Average(x => x.Population)
+					};
+			return q;
+		}
+
+		#region CRUD methods
 		public void AddNewCounty(County county)
 		{
 			if (county == null)
@@ -201,5 +215,6 @@ namespace W6H9QV_HFT_2021221.Logic
 
 			countyRepo.Update(county);
 		}
+		#endregion
 	}
 }
