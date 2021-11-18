@@ -34,18 +34,76 @@ namespace W6H9QV_HFT_2021221.Logic
 		void DeleteCountryBy(int id);
 		void DeleteCountryBy(string name);
 
-		//TODO non-cruds
+		//non-cruds
+		string CountryWithHighestPopulatedCity();
+		IList<CountryAveragePopulation> GetAverageCountryPopulation();
 	}
 
 	public class CountryLogic : ICountryLogic
 	{
 		ICountryRepository countryRepo;
+		ICountyRepository countyRepo;
+		ICityRepository cityRepo;
 
-		public CountryLogic(ICountryRepository countryRepository)
+		public CountryLogic(ICountryRepository countryRepository, ICountyRepository countyRepository, ICityRepository cityRepository)
 		{
-			this.countryRepo = countryRepository;
+			countryRepo = countryRepository;
+			countyRepo = countyRepository;
+			cityRepo = cityRepository;
 		}
 
+		public string CountryWithHighestPopulatedCity()
+		{
+			var q = (from x in countryRepo.GetAll()
+					 join y in countyRepo.GetAll() on x.ID equals y.CountryID
+					 join z in cityRepo.GetAll() on y.ID equals z.CountyID
+					 select new
+					 {
+						 NAME = x.Name,
+						 MAX = z.Population
+					 }).OrderByDescending(x => x.MAX).FirstOrDefault().NAME;
+			return q;
+		}
+
+		public IList<CountryAveragePopulation> GetAverageCountryPopulation()
+		{
+			var q_sub = (from x in countyRepo.GetAll()
+						 select new CountyAveragePopulation
+						 {
+							 CountryName = x.Country.Name,
+							 Name = x.Name,
+							 Avg = x.Cities.Average(x => x.Population)
+						 }).AsQueryable();
+
+			var q = (from x in countryRepo.GetAll()
+					 join y in q_sub on x.Name equals y.CountryName
+					 select new CountryAveragePopulation
+					 {
+						 Name = x.Name,
+						 CountyAveragePopulation = new List<CountyAveragePopulation> { y }
+					 }).ToList();
+
+			var averages = new List<CountryAveragePopulation>();
+			for (int i = 0; i < q.Count(); i++)
+			{
+				if (averages.Count == 0)
+					averages.Add(q[i]);
+				else
+				{
+					int count = averages.Count;
+					for (int j = 0; j < count; j++)
+					{
+						if (q[i].Name == averages[j].Name)
+							averages[j].CountyAveragePopulation
+								.Add(q[i].CountyAveragePopulation.SingleOrDefault());
+						else averages.Add(q[i]);
+					}
+				}
+			}
+			return averages;
+		}
+
+		#region CRUD methods
 		public void AddNewCountry(Country country)
 		{
 			if (country == null)
@@ -229,5 +287,6 @@ namespace W6H9QV_HFT_2021221.Logic
 
 			countryRepo.Update(country);
 		}
+		#endregion
 	}
 }
