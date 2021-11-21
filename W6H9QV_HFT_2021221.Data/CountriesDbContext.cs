@@ -63,9 +63,18 @@ namespace W6H9QV_HFT_2021221.Data
 			City kapf = new City() { ID = 11, Name = "Kapfenberg", Population = 22798, Elevation = 502, Area = 82.08, CountyID = styr.ID };
 			City leob = new City() { ID = 12, Name = "Leoben", Population = 24645, Elevation = 541, Area = 107.77, CountyID = styr.ID };
 
-			modelBuilder.Entity<Country>().HasData(hu, aus);
-			modelBuilder.Entity<County>().HasData(bacs, jasz, csongr, styr);
-			modelBuilder.Entity<City>().HasData(kecs, kisk, solt, szol, abad, mezo, szeg, mako, csong, graz, kapf, leob);
+
+			Country austr = new Country() { ID = 3, Name = "Australia", EnglishName = "Australia", CountryCode = "au", Currency = "aud", DrivingSide = DrivingSide.left, Population = 2590190 };
+
+			County vic = new County() { ID = 5, Name = "Victoria", Population = 6648564, CountySeat = "Melbourne", Districts = 79, CountryID = austr.ID };
+
+			City melb = new City() { ID = 13, Name = "Melbourne", Population = 5159211, Elevation = 31, Area = 9993, CountyID = vic.ID };
+			City bend = new City() { ID = 14, Name = "Bendigo", Population = 100632, Elevation = 213, Area = 287.4, CountyID = vic.ID };
+			City sale = new City() { ID = 15, Name = "Sale", Population = 15135, Area = 45.6, CountyID = vic.ID };
+
+			modelBuilder.Entity<Country>().HasData(hu, aus, austr);
+			modelBuilder.Entity<County>().HasData(bacs, jasz, csongr, styr, vic);
+			modelBuilder.Entity<City>().HasData(kecs, kisk, solt, szol, abad, mezo, szeg, mako, csong, graz, kapf, leob, melb, bend, sale);
 
 		}
 
