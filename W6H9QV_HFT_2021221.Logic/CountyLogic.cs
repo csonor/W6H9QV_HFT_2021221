@@ -10,7 +10,7 @@ namespace W6H9QV_HFT_2021221.Logic
 	{
 		County GetCountyBy(int id);
 		County GetCountyBy(string name);
-		IList<County> GetCounties();
+		IEnumerable<County> GetCounties();
 
 		void AddNewCounty(County county);
 
@@ -31,20 +31,22 @@ namespace W6H9QV_HFT_2021221.Logic
 		void DeleteCountyBy(int id);
 		void DeleteCountyBy(string name);
 
-		//TODO non-cruds
-		IList<CountyAveragePopulation> GetAverageCountyPopulation();
+		IEnumerable<CountyAveragePopulation> GetAverageCountyPopulation();
+		double CountySeatsAveragePopulation();
 	}
 
 	public class CountyLogic : ICountyLogic
 	{
 		ICountyRepository countyRepo;
+		ICityRepository cityRepo;
 
-		public CountyLogic(ICountyRepository countyRepo)
+		public CountyLogic(ICountyRepository countyRepo, ICityRepository cityRepo)
 		{
 			this.countyRepo = countyRepo;
+			this.cityRepo = cityRepo;
 		}
 
-		public IList<CountyAveragePopulation> GetAverageCountyPopulation()
+		public IEnumerable<CountyAveragePopulation> GetAverageCountyPopulation()
 		{
 			var q = from x in countyRepo.GetAll()
 					select new CountyAveragePopulation
@@ -53,7 +55,17 @@ namespace W6H9QV_HFT_2021221.Logic
 						Name = x.Name,
 						Avg = x.Cities.Average(x => x.Population)
 					};
-			return q.ToList();
+			return q;
+		}
+
+		public double CountySeatsAveragePopulation()
+		{
+			var pops = new List<int>();
+			foreach (var item in countyRepo.GetAll().ToList())
+			{
+				pops.Add(cityRepo.GetBy(item.CountySeat).Population);
+			}
+			return pops.Average();
 		}
 
 		#region CRUD methods
@@ -184,9 +196,9 @@ namespace W6H9QV_HFT_2021221.Logic
 			countyRepo.DeleteBy(name);
 		}
 
-		public IList<County> GetCounties()
+		public IEnumerable<County> GetCounties()
 		{
-			return countyRepo.GetAll().ToList();
+			return countyRepo.GetAll();
 		}
 
 		public County GetCountyBy(int id)
