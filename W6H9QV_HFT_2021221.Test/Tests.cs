@@ -65,6 +65,12 @@ namespace W6H9QV_HFT_2021221.Test
 			Assert.That(CountyLogic.CountySeatsAveragePopulation(), Is.EqualTo(159373.5));
 		}
 
+		[Test]
+		public void SumAreaByCountries_ReturnsCorrectValue()
+		{
+			Assert.That(CountryLogic.SumAreaByCountries().Sum(x => x.Sum), Is.EqualTo(2176.61));
+		}
+
 		#region create and get tests
 		[TestCase(-1)]
 		[TestCase(2000000)]

@@ -36,6 +36,7 @@ namespace W6H9QV_HFT_2021221.Logic
 
 		string CountryWithHighestPopulatedCity();
 		IEnumerable<CountryAveragePopulation> GetAverageCountryPopulation();
+		IEnumerable<SumAreaByCountry> SumAreaByCountries();
 	}
 
 	public class CountryLogic : ICountryLogic
@@ -100,6 +101,20 @@ namespace W6H9QV_HFT_2021221.Logic
 				}
 			}
 			return averages;
+		}
+
+		public IEnumerable<SumAreaByCountry> SumAreaByCountries()
+		{
+			var q = from x in countryRepo.GetAll()
+					join y in countyRepo.GetAll() on x.ID equals y.CountryID
+					join z in cityRepo.GetAll() on y.ID equals z.CountyID
+					group new { x, y, z } by x.Name into g
+					select new SumAreaByCountry
+					{
+						Name = g.Key,
+						Sum = g.Sum(x => x.z.Area)
+					};
+			return q;
 		}
 
 		#region CRUD methods
