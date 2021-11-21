@@ -4,6 +4,7 @@ using NUnit.Framework;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
 using W6H9QV_HFT_2021221.Repository;
+using System.Linq;
 
 namespace W6H9QV_HFT_2021221.Test
 {
@@ -17,13 +18,13 @@ namespace W6H9QV_HFT_2021221.Test
 		[SetUp]
 		public void Setup()
 		{
-			Mock<ICountyRepository> mockedCountyRepo = new Mock<ICountyRepository>();
-			CountyLogic = new CountyLogic(mockedCountyRepo.Object);
-			mockedCountyRepo.Setup(x => x.GetAll()).Returns(FakeCounties);
-
 			Mock<ICityRepository> mockedCityRepo = new Mock<ICityRepository>();
 			CityLogic = new CityLogic(mockedCityRepo.Object);
 			mockedCityRepo.Setup(x => x.GetAll()).Returns(FakeCities);
+
+			Mock<ICountyRepository> mockedCountyRepo = new Mock<ICountyRepository>();
+			CountyLogic = new CountyLogic(mockedCountyRepo.Object, mockedCityRepo.Object);
+			mockedCountyRepo.Setup(x => x.GetAll()).Returns(FakeCounties);
 
 			Mock<ICountryRepository> mockedCountryRepo = new Mock<ICountryRepository>();
 			CountryLogic = new CountryLogic(mockedCountryRepo.Object, mockedCountyRepo.Object, mockedCityRepo.Object);
@@ -49,13 +50,19 @@ namespace W6H9QV_HFT_2021221.Test
 		[Test]
 		public void GetAverageCountyPopulation_ReturnsCorrectValues()
 		{
-			Assert.That(CountyLogic.GetAverageCountyPopulation().Count, Is.EqualTo(CountyLogic.GetCounties().Count));
+			Assert.That(CountyLogic.GetAverageCountyPopulation().Count(), Is.EqualTo(CountyLogic.GetCounties().Count()));
 		}
 
 		[Test]
 		public void GetAverageCountryPopulation_ReturnsCorrectValues()
 		{
-			Assert.That(CountryLogic.GetAverageCountryPopulation().Count, Is.EqualTo(CountryLogic.GetCountries().Count));
+			Assert.That(CountryLogic.GetAverageCountryPopulation().Count, Is.EqualTo(CountryLogic.GetCountries().Count()));
+		}
+
+		[Test]
+		public void CountySeatsAveragePopulation_ReturnsCorrectValue()
+		{
+			Assert.That(CountyLogic.CountySeatsAveragePopulation(), Is.EqualTo(159373.5));
 		}
 
 		#region create and get tests
