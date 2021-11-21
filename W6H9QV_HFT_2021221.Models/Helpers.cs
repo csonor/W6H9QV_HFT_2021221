@@ -12,7 +12,8 @@ namespace W6H9QV_HFT_2021221.Models
 	public class CitiesGroupedByDrivingSide
 	{
 		public DrivingSide DrivingSide { get; set; }
-		public string CityName { get; set; }
+		public List<City> Cities { get; set; }
+		public int SumPopulation { get => Cities.Sum(x => x.Population); }
 	}
 
 	public class CountryAveragePopulation
