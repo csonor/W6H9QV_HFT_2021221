@@ -37,6 +37,7 @@ namespace W6H9QV_HFT_2021221.Logic
 		string CountryWithHighestPopulatedCity();
 		IEnumerable<CountryAveragePopulation> GetAverageCountryPopulation();
 		IEnumerable<SumAreaByCountry> SumAreaByCountries();
+		IEnumerable<CitiesGroupedByDrivingSide> CitiesGroupedByDrivingSide();
 	}
 
 	public class CountryLogic : ICountryLogic
@@ -84,20 +85,21 @@ namespace W6H9QV_HFT_2021221.Logic
 					 }).ToList();
 
 			var averages = new List<CountryAveragePopulation>();
-			for (int i = 0; i < q.Count(); i++)
+			foreach (var item in q)
 			{
 				if (averages.Count == 0)
-					averages.Add(q[i]);
+					averages.Add(item);
 				else
 				{
-					int count = averages.Count;
-					for (int j = 0; j < count; j++)
-					{
-						if (q[i].Name == averages[j].Name)
-							averages[j].CountyAveragePopulation
-								.Add(q[i].CountyAveragePopulation.SingleOrDefault());
-						else averages.Add(q[i]);
-					}
+					bool found = false;
+					foreach (var average in averages)
+						if (item.Name == average.Name)
+						{
+							average.CountyAveragePopulation
+								.Add(item.CountyAveragePopulation.SingleOrDefault());
+							found = true;
+						}
+					if (!found) averages.Add(item);
 				}
 			}
 			return averages;
@@ -115,6 +117,39 @@ namespace W6H9QV_HFT_2021221.Logic
 						Sum = g.Sum(x => x.z.Area)
 					};
 			return q;
+		}
+
+		public IEnumerable<CitiesGroupedByDrivingSide> CitiesGroupedByDrivingSide()
+		{
+			var q = from x in countryRepo.GetAll()
+					join y in countyRepo.GetAll() on x.ID equals y.CountryID
+					join z in cityRepo.GetAll() on y.ID equals z.CountyID
+					select new CitiesGroupedByDrivingSide
+					{
+						DrivingSide = x.DrivingSide,
+						Cities = y.Cities.ToList()
+					};
+
+			var sides = new List<CitiesGroupedByDrivingSide>();
+			foreach (var item in q)
+			{
+				if (sides.Count == 0)
+					sides.Add(item);
+				else
+				{
+					bool found = false;
+					foreach (var side in sides)
+						if (item.DrivingSide == side.DrivingSide)
+						{
+							if (!side.Cities.Contains(item.Cities.First()))
+								foreach (var city in item.Cities)
+									side.Cities.Add(city);
+							found = true;
+						}
+					if (!found) sides.Add(item);
+				}
+			}
+			return sides;
 		}
 
 		#region CRUD methods
