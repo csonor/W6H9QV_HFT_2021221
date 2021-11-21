@@ -63,7 +63,7 @@ namespace W6H9QV_HFT_2021221.Logic
 			var pops = new List<int>();
 			foreach (var item in countyRepo.GetAll().ToList())
 			{
-				pops.Add(cityRepo.GetBy(item.CountySeat).Population);
+				pops.Add(item.Cities.SingleOrDefault(x => x.Name == item.CountySeat).Population);
 			}
 			return pops.Average();
 		}
