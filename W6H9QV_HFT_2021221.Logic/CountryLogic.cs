@@ -10,7 +10,7 @@ namespace W6H9QV_HFT_2021221.Logic
 	{
 		Country GetCountryBy(int id);
 		Country GetCountryBy(string name);
-		IList<Country> GetCountries();
+		IEnumerable<Country> GetCountries();
 
 		void AddNewCountry(Country country);
 
@@ -34,9 +34,8 @@ namespace W6H9QV_HFT_2021221.Logic
 		void DeleteCountryBy(int id);
 		void DeleteCountryBy(string name);
 
-		//non-cruds
 		string CountryWithHighestPopulatedCity();
-		IList<CountryAveragePopulation> GetAverageCountryPopulation();
+		IEnumerable<CountryAveragePopulation> GetAverageCountryPopulation();
 	}
 
 	public class CountryLogic : ICountryLogic
@@ -65,7 +64,7 @@ namespace W6H9QV_HFT_2021221.Logic
 			return q;
 		}
 
-		public IList<CountryAveragePopulation> GetAverageCountryPopulation()
+		public IEnumerable<CountryAveragePopulation> GetAverageCountryPopulation()
 		{
 			var q_sub = (from x in countyRepo.GetAll()
 						 select new CountyAveragePopulation
@@ -256,9 +255,9 @@ namespace W6H9QV_HFT_2021221.Logic
 			countryRepo.DeleteBy(name);
 		}
 
-		public IList<Country> GetCountries()
+		public IEnumerable<Country> GetCountries()
 		{
-			return countryRepo.GetAll().ToList();
+			return countryRepo.GetAll();
 		}
 
 		public Country GetCountryBy(int id)

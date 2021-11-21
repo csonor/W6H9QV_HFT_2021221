@@ -10,7 +10,7 @@ namespace W6H9QV_HFT_2021221.Logic
 	{
 		City GetCityBy(int id);
 		City GetCityBy(string name);
-		IList<City> GetCities();
+		IEnumerable<City> GetCities();
 
 		void AddNewCity(City city);
 
@@ -27,8 +27,6 @@ namespace W6H9QV_HFT_2021221.Logic
 
 		void DeleteCityBy(int id);
 		void DeleteCityBy(string name);
-
-		//TODO non-curds
 	}
 
 	public class CityLogic : ICityLogic
@@ -143,9 +141,9 @@ namespace W6H9QV_HFT_2021221.Logic
 			cityRepo.DeleteBy(name);
 		}
 
-		public IList<City> GetCities()
+		public IEnumerable<City> GetCities()
 		{
-			return cityRepo.GetAll().ToList();
+			return cityRepo.GetAll();
 		}
 
 		public City GetCityBy(int id)
