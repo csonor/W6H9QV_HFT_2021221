@@ -66,9 +66,15 @@ namespace W6H9QV_HFT_2021221.Test
 		}
 
 		[Test]
-		public void SumAreaByCountries_ReturnsCorrectValue()
+		public void SumAreaByCountries_ReturnsCorrectValues()
 		{
 			Assert.That(CountryLogic.SumAreaByCountries().Sum(x => x.Sum), Is.EqualTo(2176.61));
+		}
+
+		[Test]
+		public void CitiesGroupedByDrivingSide_ReturnsCorrectValues()
+		{
+			Assert.That(CountryLogic.CitiesGroupedByDrivingSide().First().Cities.Count(), Is.EqualTo(CityLogic.GetCities().Count()));
 		}
 
 		#region create and get tests
