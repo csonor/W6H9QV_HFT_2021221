@@ -10,14 +10,14 @@ namespace W6H9QV_HFT_2021221.Repository
 		{
 		}
 
-		public void ChangeArea(int id, int newArea)
+		public void ChangeArea(int id, double newArea)
 		{
 			var city = GetBy(id);
 			city.Area = newArea;
 			ctx.SaveChanges();
 		}
 
-		public void ChangeArea(string name, int newArea)
+		public void ChangeArea(string name, double newArea)
 		{
 			var city = GetBy(name);
 			city.Area = newArea;

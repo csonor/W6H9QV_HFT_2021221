@@ -46,7 +46,7 @@ namespace W6H9QV_HFT_2021221.Repository
 
 	public interface ICityRepository : IRepository<City>
 	{
-		void ChangeArea(int id, int newArea);
-		void ChangeArea(string name, int newArea);
+		void ChangeArea(int id, double newArea);
+		void ChangeArea(string name, double newArea);
 	}
 }
