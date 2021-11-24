@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace CarDB.Client
+namespace W6H9QV_HFT_2021221.Client
 {
 	class RestService
     {
