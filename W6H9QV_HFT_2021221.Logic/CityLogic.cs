@@ -20,8 +20,8 @@ namespace W6H9QV_HFT_2021221.Logic
 		void ChangeCityPopulation(int id, int newPopulation);
 		void ChangeCityPopulation(string name, int newPopulation);
 
-		void ChangeCityArea(int id, int newArea);
-		void ChangeCityArea(string name, int newArea);
+		void ChangeCityArea(int id, double newArea);
+		void ChangeCityArea(string name, double newArea);
 
 		void UpdateCity(City city);
 
@@ -47,7 +47,7 @@ namespace W6H9QV_HFT_2021221.Logic
 			cityRepo.AddNew(city);
 		}
 
-		public void ChangeCityArea(int id, int newArea)
+		public void ChangeCityArea(int id, double newArea)
 		{
 			if (id > cityRepo.GetAll().Count() || id < 1)
 				throw new IndexOutOfRangeException("The given ID was outside of the database.");
@@ -58,7 +58,7 @@ namespace W6H9QV_HFT_2021221.Logic
 			cityRepo.ChangeArea(id, newArea);
 		}
 
-		public void ChangeCityArea(string name, int newArea)
+		public void ChangeCityArea(string name, double newArea)
 		{
 			if (name == null)
 				throw new ArgumentNullException("The given name was null.");
