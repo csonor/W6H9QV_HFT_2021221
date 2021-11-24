@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace W6H9QV_HFT_2021221.Models
 {
@@ -41,6 +42,7 @@ namespace W6H9QV_HFT_2021221.Models
 		public DrivingSide DrivingSide { get; set; }
 
 		[NotMapped]
+		[JsonIgnore]
 		public virtual ICollection<County> Counties { get; set; }
 
 		public Country()

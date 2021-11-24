@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace W6H9QV_HFT_2021221.Models
 {
@@ -29,9 +30,11 @@ namespace W6H9QV_HFT_2021221.Models
 		public int CountryID { get; set; }
 
 		[NotMapped]
+		[JsonIgnore]
 		public virtual Country Country { get; set; }
 
 		[NotMapped]
+		[JsonIgnore]
 		public virtual ICollection<City> Cities { get; set; }
 
 		public County()
