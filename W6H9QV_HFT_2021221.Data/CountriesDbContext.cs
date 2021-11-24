@@ -28,13 +28,13 @@ namespace W6H9QV_HFT_2021221.Data
 			e.HasOne(c => c.County)
 			.WithMany(c => c.Cities)
 			.HasForeignKey(c => c.CountyID)
-			.OnDelete(DeleteBehavior.ClientCascade));
+			.OnDelete(DeleteBehavior.Cascade));
 
 			modelBuilder.Entity<County>(e =>
 			e.HasOne(c => c.Country)
 			.WithMany(c => c.Counties)
 			.HasForeignKey(c => c.CountryID)
-			.OnDelete(DeleteBehavior.ClientCascade));
+			.OnDelete(DeleteBehavior.Cascade));
 
 			Country hu = new Country() { ID = 1, Name = "Magyarország", EnglishName = "Hungary", CountryCode = "hu", Currency = "huf", DrivingSide = DrivingSide.right, Population = 9730000 };
 
