@@ -26,12 +26,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		// GET api/<CountyController>/5
+		[Route("id/{id}")]
 		[HttpGet("{id}")]
 		public County Get(int id)
 		{
 			return countyLogic.GetCountyBy(id);
 		}
 
+		[Route("nm/{name}")]
 		[HttpGet("{name}")]
 		public County Get(string name)
 		{
@@ -54,12 +56,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//district
+		[Route("distid/{id}/{newDistricts}")]
 		[HttpPut("{id} {newDistricts}")]
 		public void PutCountyDistricts(int id, int newDistricts)
 		{
 			countyLogic.ChangeCountyDistricts(id, newDistricts);
 		}
 
+		[Route("distnm/{name}/{newDistricts}")]
 		[HttpPut("{name} {newDistricts}")]
 		public void PutCountyDistricts(string name, int newDistricts)
 		{
@@ -67,12 +71,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//name
+		[Route("nameid/{id}/{newName}")]
 		[HttpPut("{id} {newName}")]
 		public void PutCountyName(int id, string newName)
 		{
 			countyLogic.ChangeCountyName(id, newName);
 		}
 
+		[Route("namenm/{name}/{newName}")]
 		[HttpPut("{name} {newName}")]
 		public void PutCountyName(string name, string newName)
 		{
@@ -80,12 +86,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//population
+		[Route("popid/{id}/{newPopulation}")]
 		[HttpPut("{id} {newPopulation}")]
 		public void PutCountyPopulation(int id, int newPopulation)
 		{
 			countyLogic.ChangeCountyPopulation(id, newPopulation);
 		}
 
+		[Route("popnm/{name}/{newPopulation}")]
 		[HttpPut("{name} {newPopulation}")]
 		public void PutCountyPopulation(string name, int newPopulation)
 		{
@@ -93,12 +101,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//countySeat
+		[Route("seatid/{id}/{newSeat}")]
 		[HttpPut("{id} {newSeat}")]
 		public void PutCountySeat(int id, string newSeat)
 		{
 			countyLogic.ChangeCountySeat(id, newSeat);
 		}
 
+		[Route("seatnm/{name}/{newSeat}")]
 		[HttpPut("{name} {newSeat}")]
 		public void PutCountySeat(string name, string newSeat)
 		{
@@ -107,12 +117,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		#endregion
 
 		// DELETE api/<CountyController>/5
+		[Route("delid/{id}")]
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
 			countyLogic.DeleteCountyBy(id);
 		}
 
+		[Route("delnm/{name}")]
 		[HttpDelete("{name}")]
 		public void Delete(string name)
 		{

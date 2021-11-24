@@ -26,12 +26,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		// GET api/<CountryController>/5
+		[Route("id/{id}")]
 		[HttpGet("{id}")]
 		public Country Get(int id)
 		{
 			return countryLogic.GetCountryBy(id);
 		}
 
+		[Route("nm/{name}")]
 		[HttpGet("{name}")]
 		public Country Get(string name)
 		{
@@ -54,12 +56,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//countrycode
+		[Route("codeid/{id}/{newCode}")]
 		[HttpPut("{id} {newCode}")]
 		public void PutCountryCode(int id, string newCode)
 		{
 			countryLogic.ChangeCountryCode(id, newCode);
 		}
 
+		[Route("codenm/{name}/{newCode}")]
 		[HttpPut("{name} {newCode}")]
 		public void PutCountryCode(string name, string newCode)
 		{
@@ -67,12 +71,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//currency
+		[Route("currid/{id}/{newCurrency}")]
 		[HttpPut("{id} {newCurrency}")]
 		public void PutCountryCurrency(int id, string newCurrency)
 		{
 			countryLogic.ChangeCountryCurrency(id, newCurrency);
 		}
 
+		[Route("currnm/{name}/{newCurrency}")]
 		[HttpPut("{name} {newCurrency}")]
 		public void PutCountryCurrency(string name, string newCurrency)
 		{
@@ -80,12 +86,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//english name
+		[Route("engid/{id}/{newName}")]
 		[HttpPut("{id} {newName}")]
 		public void PutCountryEnglishName(int id, string newName)
 		{
 			countryLogic.ChangeCountryEnglishName(id, newName);
 		}
 
+		[Route("engnm/{name}/{newName}")]
 		[HttpPut("{name} {newName}")]
 		public void PutCountryEnglishName(string name, string newName)
 		{
@@ -93,12 +101,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//name
+		[Route("nameid/{id}/{newName}")]
 		[HttpPut("{id} {newName}")]
 		public void PutCountryName(int id, string newName)
 		{
 			countryLogic.ChangeCountryName(id, newName);
 		}
 
+		[Route("namenm/{name}/{newName}")]
 		[HttpPut("{name} {newName}")]
 		public void PutCountryName(string name, string newName)
 		{
@@ -106,12 +116,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		}
 
 		//population
+		[Route("popid/{id}/{newPopulation}")]
 		[HttpPut("{id} {newPopulation}")]
 		public void PutCountryPopulation(int id, int newPopulation)
 		{
 			countryLogic.ChangeCountryPopulation(id, newPopulation);
 		}
 
+		[Route("popnm/{name}/{newPopulation}")]
 		[HttpPut("{name} {newPopulation}")]
 		public void PutCountryPopulation(string name, int newPopulation)
 		{
@@ -120,12 +132,14 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		#endregion
 
 		// DELETE api/<CountryController>/5
+		[Route("delid/{id}")]
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
 			countryLogic.DeleteCountryBy(id);
 		}
 
+		[Route("delnm/{name}")]
 		[HttpDelete("{name}")]
 		public void Delete(string name)
 		{
