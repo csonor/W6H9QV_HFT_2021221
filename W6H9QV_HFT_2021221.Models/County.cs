@@ -24,8 +24,10 @@ namespace W6H9QV_HFT_2021221.Models
 		[ToString]
 		public string CountySeat { get; set; }
 
+		[ToString]
 		public int? Districts { get; set; }
 
+		[ToString]
 		[ForeignKey(nameof(Country))]
 		public int CountryID { get; set; }
 

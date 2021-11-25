@@ -36,9 +36,11 @@ namespace W6H9QV_HFT_2021221.Models
 		[ToString]
 		public int Population { get; set; }
 
+		[ToString]
 		public string Currency { get => currency; set => currency = value.ToUpper(); }
 		string currency;
 
+		[ToString]
 		public DrivingSide DrivingSide { get; set; }
 
 		[NotMapped]

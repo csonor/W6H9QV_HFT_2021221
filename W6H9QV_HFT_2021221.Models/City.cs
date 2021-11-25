@@ -24,11 +24,13 @@ namespace W6H9QV_HFT_2021221.Models
 		[ToString]
 		public int? Elevation { get; set; }
 
+		[ToString]
 		/// <summary>
 		/// In square kilometers
 		/// </summary>
 		public double Area { get; set; }
 
+		[ToString]
 		[ForeignKey(nameof(County))]
 		public int CountyID { get; set; }
 
