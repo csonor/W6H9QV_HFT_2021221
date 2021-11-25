@@ -155,6 +155,8 @@ namespace W6H9QV_HFT_2021221.Logic
 		#region CRUD methods
 		public void AddNewCountry(Country country)
 		{
+			if (country == null)
+				throw new ArgumentNullException();
 			countryRepo.AddNew(country);
 		}
 
@@ -225,12 +227,18 @@ namespace W6H9QV_HFT_2021221.Logic
 
 		public Country GetCountryBy(int id)
 		{
+			if (id < 0)
+				throw new IndexOutOfRangeException();
 			return countryRepo.GetBy(id);
 		}
 
 		public Country GetCountryBy(string name)
 		{
-			return countryRepo.GetBy(name);
+			if (name == null) throw new ArgumentNullException();
+			var country = countryRepo.GetBy(name);
+			if (country == null)
+				throw new Exception();
+			return country;
 		}
 
 		public void UpdateCountry(Country country)
