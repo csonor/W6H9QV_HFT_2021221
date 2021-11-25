@@ -4,6 +4,7 @@ using System.Net.Http;
 
 namespace W6H9QV_HFT_2021221.Client
 {
+	enum ChangeType { name, eng, code, curr, pop }
 	class RestService
 	{
 		HttpClient client;
@@ -31,7 +32,7 @@ namespace W6H9QV_HFT_2021221.Client
 			}
 		}
 
-		public List<T> Get<T>()
+		public List<T> GetAll<T>()
 		{
 			var type = typeof(T).Name.ToLower();
 			List<T> items = new List<T>();
@@ -59,18 +60,22 @@ namespace W6H9QV_HFT_2021221.Client
 			return item;
 		}
 
-		public void Post<T>(T item, string endpoint)
+		public void Post<T>(T item)
 		{
 			HttpResponseMessage response =
-				client.PostAsJsonAsync(endpoint, item).GetAwaiter().GetResult();
+				client.PostAsJsonAsync(typeof(T).Name, item).GetAwaiter().GetResult();
 
 			response.EnsureSuccessStatusCode();
 		}
 
-		public void Delete(int id, string endpoint)
+		public void Delete<T>(object idOrName)
 		{
-			HttpResponseMessage response =
-				client.DeleteAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
+			var type = typeof(T).Name.ToLower();
+			HttpResponseMessage response;
+			if (idOrName.GetType() == typeof(int))
+				response = client.DeleteAsync(type + "/delid/" + ((int)idOrName).ToString()).GetAwaiter().GetResult();
+			else
+				response = client.DeleteAsync(type + "/delnm/" + (string)idOrName).GetAwaiter().GetResult();
 
 			response.EnsureSuccessStatusCode();
 		}
@@ -83,15 +88,19 @@ namespace W6H9QV_HFT_2021221.Client
 			response.EnsureSuccessStatusCode();
 		}
 
-		public void PutName<T>(object idOrName, string newName)
+		public void PutProperty<T>(object idOrName, string newName, T entity, ChangeType change)
 		{
 			var type = typeof(T).Name.ToLower();
 			HttpResponseMessage response;
+
 			if (idOrName.GetType() == typeof(int))
-				response = client.PutAsJsonAsync(type + "/nameid/" + ((int)idOrName).ToString() + "/" + newName,
-					newName).GetAwaiter().GetResult();
-			else response = client.PutAsJsonAsync(type + "/namenm/" + (string)idOrName + "/" + newName,
-					newName).GetAwaiter().GetResult();
+				response = client.PutAsJsonAsync(type + "/" + change.ToString() + "id/"
+					+ ((int)idOrName).ToString() + "/" + newName,
+					entity).GetAwaiter().GetResult();
+
+			else response = client.PutAsJsonAsync(type + "/" + change.ToString() + "nm/"
+					+ (string)idOrName + "/" + newName,
+					entity).GetAwaiter().GetResult();
 
 			response.EnsureSuccessStatusCode();
 		}

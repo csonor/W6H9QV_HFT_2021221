@@ -29,19 +29,11 @@ namespace W6H9QV_HFT_2021221.Client
 		static void Menus()
 		{
 			var countryChangeMenu = new ConsoleMenu()
-				.Add("CHANGE NAME", () =>
-				{
-					var entity = rest.Get<Country>(GetByIdOrName());
-					if (entity== null)
-						Console.WriteLine("\nDidn't find anything with this input\n");
-					else rest.PutName<Country>(GetByIdOrName(),
-							UserInputCheck<string>("Enter new name:"));
-					PressToGoBack();
-				})
-				//.Add("CHANGE ENGLISH NAME",)
-				//.Add("CHANGE COUNTRY CODE",)
-				//.Add("CHANGE POPULATION",)
-				//.Add("CHANGE CURRENCY",)
+				.Add("CHANGE NAME", () => ChangeProperty<Country, string>("Enter new name:", ChangeType.name))
+				.Add("CHANGE ENGLISH NAME", () => ChangeProperty<Country, string>("Enter new name:", ChangeType.eng))
+				.Add("CHANGE COUNTRY CODE", () => ChangeProperty<Country, string>("Enter new code:", ChangeType.code))
+				.Add("CHANGE POPULATION", () => ChangeProperty<Country, int>("Enter new population:", ChangeType.pop))
+				.Add("CHANGE CURRENCY", () => ChangeProperty<Country, string>("Enter new currency:", ChangeType.curr))
 				.Add("BACK", ConsoleMenu.Close)
 				.Configure(conf =>
 				{
@@ -52,14 +44,14 @@ namespace W6H9QV_HFT_2021221.Client
 			var countryMenu = new ConsoleMenu()
 				.Add("LIST ALL COUNTRY", () =>
 				{
-					rest.Get<Country>().ForEach(x => Console.WriteLine(x));
+					rest.GetAll<Country>().ForEach(x => Console.WriteLine(x));
 					PressToGoBack();
 				})
 				 .Add("GET A COUNTRY", () => GetObject<Country>())
-				 //.Add("ADD NEW COUNTRY",)
+				 .Add("ADD NEW COUNTRY", () => AddObject<Country>())
 				 .Add("UPDATE WHOLE OBJECT", () => UpdateObject<Country>())
 				 .Add("UPDATE ONE PROPERTY", () => countryChangeMenu.Show())
-				 //.Add("DELETE",)
+				 .Add("DELETE", () => DeleteObject<Country>())
 				 .Add("BACK", ConsoleMenu.Close)
 				 .Configure(conf =>
 				 {
@@ -86,9 +78,9 @@ namespace W6H9QV_HFT_2021221.Client
 		{
 			Console.Clear();
 
-			var countries = rest.Get<Country>();
-			var counties = rest.Get<County>();
-			var cities = rest.Get<City>();
+			var countries = rest.GetAll<Country>();
+			var counties = rest.GetAll<County>();
+			var cities = rest.GetAll<City>();
 
 			string output = "";
 
@@ -150,6 +142,52 @@ namespace W6H9QV_HFT_2021221.Client
 			PressToGoBack();
 		}
 
+		static void AddObject<T>()
+		{
+			var props = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<ToStringAttribute>() != null);
+			var newEntity = (T)Activator.CreateInstance(typeof(T));
+			foreach (var item in props)
+			{
+				if (item.Name != "ID")
+				{
+					if (item.PropertyType == typeof(int))
+						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+						UserInputCheck<int>($"{item.Name}:\t==>"));
+
+					else if (item.PropertyType == typeof(string))
+						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+						UserInputCheck<string>($"{item.Name}:\t==>"));
+
+					else if (item.PropertyType == typeof(double))
+						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+						UserInputCheck<double>($"{item.Name}:\t==>"));
+
+					else if (item.PropertyType == typeof(int?))
+						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+						UserInputCheck<int?>($"{item.Name}:\t==>"));
+
+					else newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+						UserInputCheck<DrivingSide>($"{item.Name}:\t==>"));
+				}
+			}
+			rest.Post(newEntity);
+			Console.WriteLine("\nItem added!\n");
+			PressToGoBack();
+		}
+
+		static void DeleteObject<T>()
+		{
+			object answer = GetByIdOrName();
+			var entity = rest.Get<Country>(answer);
+			if (entity == null) Console.WriteLine("\nDidn't find anything with this input\n");
+			else
+			{
+				rest.Delete<T>(answer);
+				Console.WriteLine("\nItem deleted!\n");
+			}
+			PressToGoBack();
+		}
+
 		static void UpdateObject<T>()
 		{
 			var entity = rest.Get<T>(GetByIdOrName());
@@ -158,26 +196,30 @@ namespace W6H9QV_HFT_2021221.Client
 				Console.WriteLine("\nDidn't find anything with this input\n");
 			else
 			{
+				Console.WriteLine("\nUpdate the entity:\n");
 				foreach (var item in entity.GetType().GetProperties().Where(x => x.GetCustomAttribute<ToStringAttribute>() != null))
 				{
-					if (item.PropertyType == typeof(int))
-						newEntity.GetType().GetProperty(item.Name).SetValue(entity,
-						UserInputCheck<int>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+					if (item.Name != "ID")
+					{
+						if (item.PropertyType == typeof(int))
+							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+							UserInputCheck<int>($"{item.Name}: {item.GetValue(entity)}\t==>"));
 
-					else if (item.PropertyType == typeof(string))
-						newEntity.GetType().GetProperty(item.Name).SetValue(entity,
-						UserInputCheck<string>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+						else if (item.PropertyType == typeof(string))
+							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+							UserInputCheck<string>($"{item.Name}: {item.GetValue(entity)}\t==>"));
 
-					else if (item.PropertyType == typeof(double))
-						newEntity.GetType().GetProperty(item.Name).SetValue(entity,
-						UserInputCheck<double>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+						else if (item.PropertyType == typeof(double))
+							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+							UserInputCheck<double>($"{item.Name}: {item.GetValue(entity)}\t==>"));
 
-					else if (item.PropertyType == typeof(int?))
-						newEntity.GetType().GetProperty(item.Name).SetValue(entity,
-						UserInputCheck<int?>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+						else if (item.PropertyType == typeof(int?))
+							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+							UserInputCheck<int?>($"{item.Name}: {item.GetValue(entity)}\t==>"));
 
-					else newEntity.GetType().GetProperty(item.Name).SetValue(entity,
-						UserInputCheck<DrivingSide>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+						else newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
+							UserInputCheck<DrivingSide>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+					}
 				}
 				rest.Put(newEntity);
 				Console.WriteLine("\nItem updated!\n");
@@ -208,6 +250,24 @@ namespace W6H9QV_HFT_2021221.Client
 			if (int.TryParse(input, out int id))
 				return id;
 			else return input;
+		}
+
+		static void ChangeProperty<T, K>(string inputAsk, ChangeType changeType)
+		{
+			object answer = GetByIdOrName();
+			var entity = rest.Get<Country>(answer);
+			if (entity == null) Console.WriteLine("\nDidn't find anything with this input\n");
+			else if (typeof(K) == typeof(string))
+				rest.PutProperty(answer, UserInputCheck<string>(inputAsk), entity, changeType);
+
+			else if (typeof(K) == typeof(int))
+				rest.PutProperty(answer, UserInputCheck<int>(inputAsk).ToString(), entity, changeType);
+
+			else if (typeof(K) == typeof(double))
+				rest.PutProperty(answer, UserInputCheck<double>(inputAsk).ToString(), entity, changeType);
+
+			else rest.PutProperty(answer, UserInputCheck<int?>(inputAsk).ToString(), entity, changeType);
+			PressToGoBack();
 		}
 
 		static T UserInputCheck<T>(string valueToAsk)
@@ -283,7 +343,9 @@ namespace W6H9QV_HFT_2021221.Client
 				Console.Write(valueToAsk + " ");
 				try
 				{
-					if (!Enum.TryParse(Console.ReadLine(), out DrivingSide side))
+					if (!Enum.TryParse<DrivingSide>(Console.ReadLine(), false, out DrivingSide side))
+						throw new Exception();
+					if (!Enum.IsDefined(typeof(DrivingSide), side))
 						throw new Exception();
 					input = (T)(object)side;
 					return input;
