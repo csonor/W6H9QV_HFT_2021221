@@ -79,8 +79,7 @@ namespace W6H9QV_HFT_2021221.Test
 
 		#region create and get tests
 		[TestCase(-1)]
-		[TestCase(2000000)]
-		public void GetById_ThrowsException_IfIdIsOutside(int id)
+		public void GetById_ThrowsException_IfNotFound(int id)
 		{
 			Assert.Throws(typeof(IndexOutOfRangeException), () => CountryLogic.GetCountryBy(id));
 		}
