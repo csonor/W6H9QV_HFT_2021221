@@ -38,12 +38,10 @@ namespace W6H9QV_HFT_2021221.Logic
 	public class CountyLogic : ICountyLogic
 	{
 		ICountyRepository countyRepo;
-		ICityRepository cityRepo;
 
-		public CountyLogic(ICountyRepository countyRepo, ICityRepository cityRepo)
+		public CountyLogic(ICountyRepository countyRepo)
 		{
 			this.countyRepo = countyRepo;
-			this.cityRepo = cityRepo;
 		}
 
 		public IEnumerable<CountyAveragePopulation> GetAverageCountyPopulation()
@@ -71,6 +69,8 @@ namespace W6H9QV_HFT_2021221.Logic
 		#region CRUD methods
 		public void AddNewCounty(County county)
 		{
+			if (county == null)
+				throw new ArgumentNullException();
 			countyRepo.AddNew(county);
 		}
 
@@ -116,9 +116,6 @@ namespace W6H9QV_HFT_2021221.Logic
 
 		public void DeleteCountyBy(int id)
 		{
-			if (id > countyRepo.GetAll().Count() || id < 1)
-				throw new IndexOutOfRangeException("The given ID was outside of the database.");
-
 			countyRepo.DeleteBy(id);
 		}
 
