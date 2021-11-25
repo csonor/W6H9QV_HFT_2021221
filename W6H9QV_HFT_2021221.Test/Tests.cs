@@ -23,7 +23,7 @@ namespace W6H9QV_HFT_2021221.Test
 			mockedCityRepo.Setup(x => x.GetAll()).Returns(FakeCities);
 
 			Mock<ICountyRepository> mockedCountyRepo = new Mock<ICountyRepository>();
-			CountyLogic = new CountyLogic(mockedCountyRepo.Object, mockedCityRepo.Object);
+			CountyLogic = new CountyLogic(mockedCountyRepo.Object);
 			mockedCountyRepo.Setup(x => x.GetAll()).Returns(FakeCounties);
 
 			Mock<ICountryRepository> mockedCountryRepo = new Mock<ICountryRepository>();
@@ -74,7 +74,7 @@ namespace W6H9QV_HFT_2021221.Test
 		[Test]
 		public void CitiesGroupedByDrivingSide_ReturnsCorrectValues()
 		{
-			Assert.That(CountryLogic.CitiesGroupedByDrivingSide().First().Cities.Count(), Is.EqualTo(CityLogic.GetCities().Count()));
+			Assert.That(CountryLogic.CitiesGroupedByDrivingSide().First().Cities.Count, Is.EqualTo(CityLogic.GetCities().Count()));
 		}
 
 		#region create and get tests
