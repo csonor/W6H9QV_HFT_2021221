@@ -29,13 +29,13 @@ namespace W6H9QV_HFT_2021221.Client
 			{
 				throw new ArgumentException("Endpoint is not available!");
 			}
-
 		}
 
-		public List<T> Get<T>(string endpoint)
+		public List<T> Get<T>()
 		{
+			var type = typeof(T).Name.ToLower();
 			List<T> items = new List<T>();
-			HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
+			HttpResponseMessage response = client.GetAsync(type).GetAwaiter().GetResult();
 			if (response.IsSuccessStatusCode)
 			{
 				items = response.Content.ReadAsAsync<List<T>>().GetAwaiter().GetResult();
@@ -43,21 +43,15 @@ namespace W6H9QV_HFT_2021221.Client
 			return items;
 		}
 
-		public T GetSingle<T>(string endpoint)
+		public T Get<T>(object idOrName)
 		{
 			T item = default(T);
-			HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-			if (response.IsSuccessStatusCode)
-			{
-				item = response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
-			}
-			return item;
-		}
-
-		public T Get<T>(int id, string endpoint)
-		{
-			T item = default(T);
-			HttpResponseMessage response = client.GetAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
+			var type = typeof(T).Name.ToLower();
+			HttpResponseMessage response;
+			if (idOrName.GetType() == typeof(int))
+				response = client.GetAsync(type + "/id/" + ((int)idOrName).ToString()).GetAwaiter().GetResult();
+			else
+				response = client.GetAsync(type + "/nm/" + (string)idOrName).GetAwaiter().GetResult();
 			if (response.IsSuccessStatusCode)
 			{
 				item = response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
@@ -81,11 +75,23 @@ namespace W6H9QV_HFT_2021221.Client
 			response.EnsureSuccessStatusCode();
 		}
 
-		public void Put<T>(T item, string endpoint)
+		public void Put<T>(T item)
 		{
 			HttpResponseMessage response =
-				client.PutAsJsonAsync(endpoint, item).GetAwaiter().GetResult();
+				client.PutAsJsonAsync(typeof(T).Name, item).GetAwaiter().GetResult();
 
+			response.EnsureSuccessStatusCode();
+		}
+
+		public void PutName<T>(object idOrName, string newName)
+		{
+			var type = typeof(T).Name.ToLower();
+			HttpResponseMessage response;
+			if (idOrName.GetType() == typeof(int))
+				response = client.PutAsJsonAsync(type + "/nameid/" + ((int)idOrName).ToString() + "/" + newName,
+					newName).GetAwaiter().GetResult();
+			else response = client.PutAsJsonAsync(type + "/namenm/" + (string)idOrName + "/" + newName,
+					newName).GetAwaiter().GetResult();
 
 			response.EnsureSuccessStatusCode();
 		}
