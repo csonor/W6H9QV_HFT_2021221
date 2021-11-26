@@ -44,6 +44,17 @@ namespace W6H9QV_HFT_2021221.Client
 			return items;
 		}
 
+		public T StatGet<T>(string route)
+		{
+			T item = default(T);
+			HttpResponseMessage response = client.GetAsync("stat/" + route).GetAwaiter().GetResult();
+			if (response.IsSuccessStatusCode)
+			{
+				item = response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
+			}
+			return item;
+		}
+
 		public T Get<T>(object idOrName)
 		{
 			T item = default(T);
