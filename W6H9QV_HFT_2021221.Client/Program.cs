@@ -45,7 +45,7 @@ namespace W6H9QV_HFT_2021221.Client
 				})
 				.Add("Get average country population", () =>
 				{
-					Console.Clear(); Console.WriteLine("Get average country population:\n");
+					Console.Clear(); Console.WriteLine("Average country population:\n");
 					rest.StatGet<IEnumerable<CountryAveragePopulation>>("GetAverageCountryPopulation")
 					.ToList().ForEach(x => Console.WriteLine(x));
 					PressToGoBack();
@@ -65,11 +65,12 @@ namespace W6H9QV_HFT_2021221.Client
 				})
 				.Add("Get average county population", () =>
 				{
-					Console.Clear(); Console.WriteLine("Get average county population:\n");
-					rest.StatGet<IEnumerable<CountyAveragePopulation>>("CountyAveragePopulation")
+					Console.Clear(); Console.WriteLine("Average county population:\n");
+					rest.StatGet<IEnumerable<CountyAveragePopulation>>("GetAverageCountyPopulation")
 					.ToList().ForEach(x => Console.WriteLine(x));
 					PressToGoBack();
 				})
+				.Add("BACK", ConsoleMenu.Close)
 				.Configure(conf =>
 				{
 					conf.Selector = "-->";
@@ -174,7 +175,7 @@ namespace W6H9QV_HFT_2021221.Client
 				.Add("COUNTRY OPTIONS", () => countryMenu.Show())
 				.Add("COUNTY OPTIONS", () => countyMenu.Show())
 				.Add("CITY OPTIONS", () => cityMenu.Show())
-				//.Add("CUSTOM METHODS", () => City_Menu())
+				.Add("CUSTOM METHODS", () => statMenu.Show())
 				.Add("EXIT", ConsoleMenu.Close)
 				.Configure(conf =>
 				{
