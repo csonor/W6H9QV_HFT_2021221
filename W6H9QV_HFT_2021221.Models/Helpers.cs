@@ -18,10 +18,23 @@ namespace W6H9QV_HFT_2021221.Models
 		public override string ToString()
 		{
 			string x = "";
-
 			foreach (var item in GetType().GetProperties())
 			{
-				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+				if (item.Name == "Cities")
+				{
+					x += $"{item.Name,-15}==>\t";
+					bool first = true;
+					foreach (var city in Cities)
+					{
+						if (first)
+						{
+							x += $"{city.Name}\n";
+							first = false;
+						}
+						else x += $"{"",-24}{city.Name}\n";
+					}
+				}
+				else x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
 			}
 			return x;
 		}
@@ -39,7 +52,16 @@ namespace W6H9QV_HFT_2021221.Models
 
 			foreach (var item in GetType().GetProperties())
 			{
-				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+				if (item.Name == "CountyAveragePopulation")
+				{
+					x += "Counties:\n";
+					foreach (var county in CountyAveragePopulation)
+					{
+						x += $"{"",-9}{"Name",-10}==>\t{county.Name}\n";
+						x += $"{"",-9}{"Average",-10}==>\t{county.Avg}\n";
+					}
+				}
+				else x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
 			}
 			return x;
 		}
