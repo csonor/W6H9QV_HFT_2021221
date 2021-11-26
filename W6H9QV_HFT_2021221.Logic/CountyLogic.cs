@@ -23,8 +23,8 @@ namespace W6H9QV_HFT_2021221.Logic
 		void ChangeCountySeat(int id, string newSeat);
 		void ChangeCountySeat(string name, string newSeat);
 
-		void ChangeCountyDistricts(int id, int newDistricts);
-		void ChangeCountyDistricts(string name, int newDistricts);
+		void ChangeCountyDistricts(int id, int? newDistricts);
+		void ChangeCountyDistricts(string name, int? newDistricts);
 
 		void UpdateCounty(County county);
 
@@ -74,12 +74,12 @@ namespace W6H9QV_HFT_2021221.Logic
 			countyRepo.AddNew(county);
 		}
 
-		public void ChangeCountyDistricts(int id, int newDistricts)
+		public void ChangeCountyDistricts(int id, int? newDistricts)
 		{
 			countyRepo.ChangeDistricts(id, newDistricts);
 		}
 
-		public void ChangeCountyDistricts(string name, int newDistricts)
+		public void ChangeCountyDistricts(string name, int? newDistricts)
 		{
 			countyRepo.ChangeDistricts(name, newDistricts);
 		}
