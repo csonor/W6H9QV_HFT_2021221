@@ -14,6 +14,17 @@ namespace W6H9QV_HFT_2021221.Models
 		public DrivingSide DrivingSide { get; set; }
 		public IList<City> Cities { get; set; }
 		public int SumPopulation { get => Cities.Sum(x => x.Population); }
+
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in GetType().GetProperties())
+			{
+				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+			}
+			return x;
+		}
 	}
 
 	public class CountryAveragePopulation
@@ -21,6 +32,17 @@ namespace W6H9QV_HFT_2021221.Models
 		public string Name { get; set; }
 		public double Avg { get => Math.Round(CountyAveragePopulation.Average(x => x.Avg), 2); }
 		public IList<CountyAveragePopulation> CountyAveragePopulation { get; set; }
+
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in GetType().GetProperties())
+			{
+				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+			}
+			return x;
+		}
 	}
 
 	public class CountyAveragePopulation
@@ -29,11 +51,33 @@ namespace W6H9QV_HFT_2021221.Models
 		public string CountryName { get; set; }
 		public double Avg { get => Math.Round(avg, 2); set => avg = value; }
 		double avg;
+
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in GetType().GetProperties())
+			{
+				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+			}
+			return x;
+		}
 	}
 
 	public class SumAreaByCountry
 	{
 		public string Name { get; set; }
 		public double Sum { get; set; }
+
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in GetType().GetProperties())
+			{
+				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+			}
+			return x;
+		}
 	}
 }
