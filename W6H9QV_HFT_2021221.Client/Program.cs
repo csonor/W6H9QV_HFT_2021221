@@ -1,5 +1,6 @@
 ﻿using ConsoleTools;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,6 +29,53 @@ namespace W6H9QV_HFT_2021221.Client
 
 		static void Menus()
 		{
+			var statMenu = new ConsoleMenu()
+				.Add("Cities grouped by driving side", () =>
+				{
+					Console.Clear(); Console.WriteLine("Cities grouped by driving side:\n");
+					rest.StatGet<IEnumerable<CitiesGroupedByDrivingSide>>("CitiesGroupedByDrivingSide")
+					.ToList().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Add("Country with highest populated city", () =>
+				{
+					Console.Clear(); Console.WriteLine("Country with highest populated city: {0}",
+					rest.StatGet<string>("CountryWithHighestPopulatedCity"));
+					PressToGoBack();
+				})
+				.Add("Get average country population", () =>
+				{
+					Console.Clear(); Console.WriteLine("Get average country population:\n");
+					rest.StatGet<IEnumerable<CountryAveragePopulation>>("GetAverageCountryPopulation")
+					.ToList().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Add("Area summed by countries", () =>
+				{
+					Console.Clear(); Console.WriteLine("Area summed by countries:\n");
+					rest.StatGet<IEnumerable<SumAreaByCountry>>("SumAreaByCountries")
+					.ToList().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Add("County seats average population", () =>
+				{
+					Console.Clear(); Console.WriteLine("County seats average population: {0}",
+					rest.StatGet<double>("CountySeatsAveragePopulation"));
+					PressToGoBack();
+				})
+				.Add("Get average county population", () =>
+				{
+					Console.Clear(); Console.WriteLine("Get average county population:\n");
+					rest.StatGet<IEnumerable<CountyAveragePopulation>>("CountyAveragePopulation")
+					.ToList().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "Custom methods menu";
+				});
+
 			var cityChangeMenu = new ConsoleMenu()
 				.Add("CHANGE NAME", () => ChangeProperty<City, string>("Enter new name:", ChangeType.name))
 				.Add("CHANGE POPULATION", () => ChangeProperty<City, int>("Enter new population:", ChangeType.pop))
@@ -215,22 +263,22 @@ namespace W6H9QV_HFT_2021221.Client
 				{
 					if (item.PropertyType == typeof(int))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<int>($"{item.Name}:==>"));
+						UserInputCheck<int>($"{item.Name,-15}==> "));
 
 					else if (item.PropertyType == typeof(string))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<string>($"{item.Name}:==>", true));
+						UserInputCheck<string>($"{item.Name,-15}==> ", true));
 
 					else if (item.PropertyType == typeof(double))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<double>($"{item.Name}:==>"));
+						UserInputCheck<double>($"{item.Name,-15}==> "));
 
 					else if (item.PropertyType == typeof(int?))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<int?>($"{item.Name}:==>"));
+						UserInputCheck<int?>($"{item.Name,-15}==> "));
 
 					else newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<DrivingSide>($"{item.Name}:==>"));
+						UserInputCheck<DrivingSide>($"{item.Name,-15}==> "));
 				}
 			}
 			rest.Post(newEntity);
@@ -266,22 +314,22 @@ namespace W6H9QV_HFT_2021221.Client
 					{
 						if (item.PropertyType == typeof(int))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<int>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+							UserInputCheck<int>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>"));
 
 						else if (item.PropertyType == typeof(string))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<string>($"{item.Name}: {item.GetValue(entity)}\t==>", true));
+							UserInputCheck<string>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>", true));
 
 						else if (item.PropertyType == typeof(double))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<double>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+							UserInputCheck<double>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>"));
 
 						else if (item.PropertyType == typeof(int?))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<int?>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+							UserInputCheck<int?>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>"));
 
 						else newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<DrivingSide>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+							UserInputCheck<DrivingSide>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>"));
 					}
 				}
 				rest.Put(newEntity);
