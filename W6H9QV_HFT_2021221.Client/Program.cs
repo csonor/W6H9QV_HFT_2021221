@@ -28,6 +28,67 @@ namespace W6H9QV_HFT_2021221.Client
 
 		static void Menus()
 		{
+			var cityChangeMenu = new ConsoleMenu()
+				.Add("CHANGE NAME", () => ChangeProperty<City, string>("Enter new name:", ChangeType.name))
+				.Add("CHANGE POPULATION", () => ChangeProperty<City, int>("Enter new population:", ChangeType.pop))
+				.Add("CHANGE COUNTY AREA", () => ChangeProperty<City, double>("Enter new area:", ChangeType.area))
+				.Add("BACK", ConsoleMenu.Close)
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "City change menu";
+				});
+
+			var cityMenu = new ConsoleMenu()
+				.Add("LIST ALL CITY", () =>
+				{
+					Console.Clear(); Console.WriteLine("All cities in database:\n");
+					rest.GetAll<City>().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Add("GET A CITY", () => GetObject<City>())
+				.Add("ADD NEW CITY", () => AddObject<City>())
+				.Add("UPDATE WHOLE OBJECT", () => UpdateObject<City>())
+				.Add("UPDATE ONE PROPERTY", () => cityChangeMenu.Show())
+				.Add("DELETE", () => DeleteObject<City>())
+				.Add("BACK", ConsoleMenu.Close)
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "City menu";
+				});
+
+			var countyChangeMenu = new ConsoleMenu()
+				.Add("CHANGE NAME", () => ChangeProperty<County, string>("Enter new name:", ChangeType.name))
+				.Add("CHANGE POPULATION", () => ChangeProperty<County, int>("Enter new population:", ChangeType.pop))
+				.Add("CHANGE COUNTY SEAT", () => ChangeProperty<County, string>("Enter new county seat:", ChangeType.seat))
+				.Add("CHANGE DISTRICTS", () => ChangeProperty<County, int?>("Enter new districts:", ChangeType.dist))
+				.Add("BACK", ConsoleMenu.Close)
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "County change menu";
+				});
+
+			var countyMenu = new ConsoleMenu()
+				.Add("LIST ALL COUNTY", () =>
+				{
+					Console.Clear(); Console.WriteLine("All counties in database:\n");
+					rest.GetAll<County>().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
+				.Add("GET A COUNTY", () => GetObject<County>())
+				.Add("ADD NEW COUNTY", () => AddObject<County>())
+				.Add("UPDATE WHOLE OBJECT", () => UpdateObject<County>())
+				.Add("UPDATE ONE PROPERTY", () => countyChangeMenu.Show())
+				.Add("DELETE", () => DeleteObject<County>())
+				.Add("BACK", ConsoleMenu.Close)
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "County menu";
+				});
+
 			var countryChangeMenu = new ConsoleMenu()
 				.Add("CHANGE NAME", () => ChangeProperty<Country, string>("Enter new name:", ChangeType.name))
 				.Add("CHANGE ENGLISH NAME", () => ChangeProperty<Country, string>("Enter new name:", ChangeType.eng))
@@ -38,33 +99,34 @@ namespace W6H9QV_HFT_2021221.Client
 				.Configure(conf =>
 				{
 					conf.Selector = "-->";
-					conf.Title = "Country menu";
+					conf.Title = "Country change menu";
 				});
 
 			var countryMenu = new ConsoleMenu()
 				.Add("LIST ALL COUNTRY", () =>
 				{
+					Console.Clear(); Console.WriteLine("All countries in database:\n");
 					rest.GetAll<Country>().ForEach(x => Console.WriteLine(x));
 					PressToGoBack();
 				})
-				 .Add("GET A COUNTRY", () => GetObject<Country>())
-				 .Add("ADD NEW COUNTRY", () => AddObject<Country>())
-				 .Add("UPDATE WHOLE OBJECT", () => UpdateObject<Country>())
-				 .Add("UPDATE ONE PROPERTY", () => countryChangeMenu.Show())
-				 .Add("DELETE", () => DeleteObject<Country>())
-				 .Add("BACK", ConsoleMenu.Close)
-				 .Configure(conf =>
-				 {
-					 conf.Selector = "-->";
-					 conf.Title = "Country menu";
-				 });
+				.Add("GET A COUNTRY", () => GetObject<Country>())
+				.Add("ADD NEW COUNTRY", () => AddObject<Country>())
+				.Add("UPDATE WHOLE OBJECT", () => UpdateObject<Country>())
+				.Add("UPDATE ONE PROPERTY", () => countryChangeMenu.Show())
+				.Add("DELETE", () => DeleteObject<Country>())
+				.Add("BACK", ConsoleMenu.Close)
+				.Configure(conf =>
+				{
+					conf.Selector = "-->";
+					conf.Title = "Country menu";
+				});
 
 			var mainMenu = new ConsoleMenu()
 				.Add("LIST EVERYTHING", () => ListEverything())
 				.Add("COUNTRY OPTIONS", () => countryMenu.Show())
-				.Add("COUNTY OPTIONS", () => County_Menu())
-				.Add("CITY OPTIONS", () => City_Menu())
-				.Add("CUSTOM METHODS", () => City_Menu())
+				.Add("COUNTY OPTIONS", () => countyMenu.Show())
+				.Add("CITY OPTIONS", () => cityMenu.Show())
+				//.Add("CUSTOM METHODS", () => City_Menu())
 				.Add("EXIT", ConsoleMenu.Close)
 				.Configure(conf =>
 				{
@@ -146,28 +208,29 @@ namespace W6H9QV_HFT_2021221.Client
 		{
 			var props = typeof(T).GetProperties().Where(x => x.GetCustomAttribute<ToStringAttribute>() != null);
 			var newEntity = (T)Activator.CreateInstance(typeof(T));
+			Console.WriteLine("\nDefine the entity:\n");
 			foreach (var item in props)
 			{
 				if (item.Name != "ID")
 				{
 					if (item.PropertyType == typeof(int))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<int>($"{item.Name}:\t==>"));
+						UserInputCheck<int>($"{item.Name}:==>"));
 
 					else if (item.PropertyType == typeof(string))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<string>($"{item.Name}:\t==>"));
+						UserInputCheck<string>($"{item.Name}:==>", true));
 
 					else if (item.PropertyType == typeof(double))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<double>($"{item.Name}:\t==>"));
+						UserInputCheck<double>($"{item.Name}:==>"));
 
 					else if (item.PropertyType == typeof(int?))
 						newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<int?>($"{item.Name}:\t==>"));
+						UserInputCheck<int?>($"{item.Name}:==>"));
 
 					else newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-						UserInputCheck<DrivingSide>($"{item.Name}:\t==>"));
+						UserInputCheck<DrivingSide>($"{item.Name}:==>"));
 				}
 			}
 			rest.Post(newEntity);
@@ -178,7 +241,7 @@ namespace W6H9QV_HFT_2021221.Client
 		static void DeleteObject<T>()
 		{
 			object answer = GetByIdOrName();
-			var entity = rest.Get<Country>(answer);
+			var entity = rest.Get<T>(answer);
 			if (entity == null) Console.WriteLine("\nDidn't find anything with this input\n");
 			else
 			{
@@ -207,7 +270,7 @@ namespace W6H9QV_HFT_2021221.Client
 
 						else if (item.PropertyType == typeof(string))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
-							UserInputCheck<string>($"{item.Name}: {item.GetValue(entity)}\t==>"));
+							UserInputCheck<string>($"{item.Name}: {item.GetValue(entity)}\t==>", true));
 
 						else if (item.PropertyType == typeof(double))
 							newEntity.GetType().GetProperty(item.Name).SetValue(newEntity,
@@ -225,16 +288,6 @@ namespace W6H9QV_HFT_2021221.Client
 				Console.WriteLine("\nItem updated!\n");
 			}
 			PressToGoBack();
-		}
-
-		static void County_Menu()
-		{
-
-		}
-
-		static void City_Menu()
-		{
-
 		}
 
 		static void DeleteLastline(int numberOfLines)
@@ -255,10 +308,10 @@ namespace W6H9QV_HFT_2021221.Client
 		static void ChangeProperty<T, K>(string inputAsk, ChangeType changeType)
 		{
 			object answer = GetByIdOrName();
-			var entity = rest.Get<Country>(answer);
+			var entity = rest.Get<T>(answer);
 			if (entity == null) Console.WriteLine("\nDidn't find anything with this input\n");
 			else if (typeof(K) == typeof(string))
-				rest.PutProperty(answer, UserInputCheck<string>(inputAsk), entity, changeType);
+				rest.PutProperty(answer, UserInputCheck<string>(inputAsk, true), entity, changeType);
 
 			else if (typeof(K) == typeof(int))
 				rest.PutProperty(answer, UserInputCheck<int>(inputAsk).ToString(), entity, changeType);
@@ -270,7 +323,7 @@ namespace W6H9QV_HFT_2021221.Client
 			PressToGoBack();
 		}
 
-		static T UserInputCheck<T>(string valueToAsk)
+		static T UserInputCheck<T>(string valueToAsk, bool checkForDigit = false)
 		{
 			var type = typeof(T);
 			T input;
@@ -280,6 +333,9 @@ namespace W6H9QV_HFT_2021221.Client
 				try
 				{
 					var answer = Console.ReadLine();
+					if (checkForDigit)
+						if (answer.Any(x => char.IsDigit(x)))
+							throw new Exception();
 					if (answer == "")
 						throw new Exception();
 					input = (T)(object)answer;
@@ -288,7 +344,7 @@ namespace W6H9QV_HFT_2021221.Client
 				catch (Exception)
 				{
 					DeleteLastline(1);
-					return UserInputCheck<T>(valueToAsk);
+					return UserInputCheck<T>(valueToAsk, checkForDigit);
 				}
 			}
 			else if (type == typeof(ConsoleKey))

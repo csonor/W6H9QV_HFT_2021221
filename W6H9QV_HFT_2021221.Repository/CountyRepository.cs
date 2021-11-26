@@ -24,14 +24,14 @@ namespace W6H9QV_HFT_2021221.Repository
 			ctx.SaveChanges();
 		}
 
-		public void ChangeDistricts(int id, int newDistricts)
+		public void ChangeDistricts(int id, int? newDistricts)
 		{
 			var county = GetBy(id);
 			county.Districts = newDistricts;
 			ctx.SaveChanges();
 		}
 
-		public void ChangeDistricts(string name, int newDistricts)
+		public void ChangeDistricts(string name, int? newDistricts)
 		{
 			var county = GetBy(name);
 			county.Districts = newDistricts;
