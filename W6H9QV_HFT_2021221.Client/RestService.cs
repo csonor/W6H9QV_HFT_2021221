@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace W6H9QV_HFT_2021221.Client
 {
-	enum ChangeType { name, eng, code, curr, pop, seat, dist, area }
+	enum ChangeType { name, eng, code, curr, pop }
 	class RestService
 	{
 		HttpClient client;
@@ -88,18 +88,18 @@ namespace W6H9QV_HFT_2021221.Client
 			response.EnsureSuccessStatusCode();
 		}
 
-		public void PutProperty<T>(object idOrName, string newValue, T entity, ChangeType change)
+		public void PutProperty<T>(object idOrName, string newName, T entity, ChangeType change)
 		{
 			var type = typeof(T).Name.ToLower();
 			HttpResponseMessage response;
 
 			if (idOrName.GetType() == typeof(int))
 				response = client.PutAsJsonAsync(type + "/" + change.ToString() + "id/"
-					+ ((int)idOrName).ToString() + "/" + newValue,
+					+ ((int)idOrName).ToString() + "/" + newName,
 					entity).GetAwaiter().GetResult();
 
 			else response = client.PutAsJsonAsync(type + "/" + change.ToString() + "nm/"
-					+ (string)idOrName + "/" + newValue,
+					+ (string)idOrName + "/" + newName,
 					entity).GetAwaiter().GetResult();
 
 			response.EnsureSuccessStatusCode();

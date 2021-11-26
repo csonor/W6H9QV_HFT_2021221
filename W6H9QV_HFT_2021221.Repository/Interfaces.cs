@@ -40,8 +40,8 @@ namespace W6H9QV_HFT_2021221.Repository
 		void ChangeCountySeat(int id, string newSeat);
 		void ChangeCountySeat(string name, string newSeat);
 
-		void ChangeDistricts(int id, int? newDistricts);
-		void ChangeDistricts(string name, int? newDistricts);
+		void ChangeDistricts(int id, int newDistricts);
+		void ChangeDistricts(string name, int newDistricts);
 	}
 
 	public interface ICityRepository : IRepository<City>
