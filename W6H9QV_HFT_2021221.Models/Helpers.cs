@@ -9,6 +9,20 @@ namespace W6H9QV_HFT_2021221.Models
 	{
 	}
 
+	static class ToString
+	{
+		public static string Tostring(object obj)
+		{
+			string x = "";
+
+			foreach (var item in obj.GetType().GetProperties())
+			{
+				x += $"{item.Name,-20}==>\t{item.GetValue(obj)}\n";
+			}
+			return x;
+		}
+	}
+
 	public class CitiesGroupedByDrivingSide
 	{
 		public DrivingSide DrivingSide { get; set; }
@@ -76,47 +90,31 @@ namespace W6H9QV_HFT_2021221.Models
 
 		public override string ToString()
 		{
-			string x = "";
-
-			foreach (var item in GetType().GetProperties())
-			{
-				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
-			}
-			return x;
+			return Models.ToString.Tostring(this);
 		}
 	}
 
 	public class SumAreaByCountry
 	{
 		public string Name { get; set; }
-		public double Sum { get; set; }
+		public double Sum { get => Math.Round(sum, 2); set => sum = value; }
+		double sum;
 
 		public override string ToString()
 		{
-			string x = "";
-
-			foreach (var item in GetType().GetProperties())
-			{
-				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
-			}
-			return x;
+			return Models.ToString.Tostring(this);
 		}
 	}
 
 	public class AverageCityInCounties
 	{
 		public string CountryName { get; set; }
-		public double AverageCityCount { get; set; }
-		
+		public double AverageCityCount { get => Math.Round(avg, 2); set => avg = value; }
+		double avg;
+
 		public override string ToString()
 		{
-			string x = "";
-
-			foreach (var item in GetType().GetProperties())
-			{
-				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
-			}
-			return x;
+			return Models.ToString.Tostring(this);
 		}
 	}
 }
