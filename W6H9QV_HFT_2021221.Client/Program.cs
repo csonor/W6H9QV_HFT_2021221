@@ -70,6 +70,13 @@ namespace W6H9QV_HFT_2021221.Client
 					.ToList().ForEach(x => Console.WriteLine(x));
 					PressToGoBack();
 				})
+				.Add("Average city count in counties by countries", () =>
+				{
+					Console.Clear(); Console.WriteLine("Average city count in counties by countries:\n");
+					rest.StatGet<IEnumerable<AverageCityInCounties>>("AverageCityInCounties")
+					.ToList().ForEach(x => Console.WriteLine(x));
+					PressToGoBack();
+				})
 				.Add("BACK", ConsoleMenu.Close)
 				.Configure(conf =>
 				{

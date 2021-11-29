@@ -38,6 +38,7 @@ namespace W6H9QV_HFT_2021221.Logic
 		IEnumerable<CountryAveragePopulation> GetAverageCountryPopulation();
 		IEnumerable<SumAreaByCountry> SumAreaByCountries();
 		IEnumerable<CitiesGroupedByDrivingSide> CitiesGroupedByDrivingSide();
+		IEnumerable<AverageCityInCounties> AverageCityInCounties();
 	}
 
 	public class CountryLogic : ICountryLogic
@@ -150,6 +151,19 @@ namespace W6H9QV_HFT_2021221.Logic
 				}
 			}
 			return sides;
+		}
+
+		public IEnumerable<AverageCityInCounties> AverageCityInCounties()
+		{
+			var q = from x in countryRepo.GetAll().ToList()
+					join y in countyRepo.GetAll().ToList() on x.ID equals y.CountryID
+					group new { x, y } by x.Name into g
+					select new AverageCityInCounties
+					{
+						CountryName = g.Key,
+						AverageCityCount = g.Average(x => x.y.Cities.Count)
+					};
+			return q;
 		}
 
 		#region CRUD methods

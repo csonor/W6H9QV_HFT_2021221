@@ -55,5 +55,11 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		{
 			return countyLogic.GetAverageCountyPopulation();
 		}
+
+		[HttpGet]
+		public IEnumerable<AverageCityInCounties> AverageCityInCounties()
+		{
+			return countryLogic.AverageCityInCounties();
+		}
 	}
 }

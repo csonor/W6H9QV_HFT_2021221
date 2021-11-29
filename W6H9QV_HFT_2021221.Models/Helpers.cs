@@ -102,4 +102,21 @@ namespace W6H9QV_HFT_2021221.Models
 			return x;
 		}
 	}
+
+	public class AverageCityInCounties
+	{
+		public string CountryName { get; set; }
+		public double AverageCityCount { get; set; }
+		
+		public override string ToString()
+		{
+			string x = "";
+
+			foreach (var item in GetType().GetProperties())
+			{
+				x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
+			}
+			return x;
+		}
+	}
 }
