@@ -48,7 +48,7 @@ namespace W6H9QV_HFT_2021221.Models
 		{
 			string x = "";
 
-			foreach (var item in this.GetType().GetProperties().Where(x => x.GetCustomAttribute<ToStringAttribute>() != null))
+			foreach (var item in GetType().GetProperties().Where(x => x.GetCustomAttribute<ToStringAttribute>() != null))
 			{
 				if (item.GetValue(this) != null)
 					x += $"{item.Name,-15}==>\t{item.GetValue(this)}\n";
