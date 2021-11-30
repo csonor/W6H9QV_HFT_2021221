@@ -1,10 +1,10 @@
 ﻿using Moq;
-using System;
 using NUnit.Framework;
+using System;
+using System.Linq;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
 using W6H9QV_HFT_2021221.Repository;
-using System.Linq;
 
 namespace W6H9QV_HFT_2021221.Test
 {
