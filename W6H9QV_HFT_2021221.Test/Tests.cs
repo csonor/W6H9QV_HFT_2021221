@@ -77,6 +77,18 @@ namespace W6H9QV_HFT_2021221.Test
 			Assert.That(CountryLogic.CitiesGroupedByDrivingSide().First().Cities.Count, Is.EqualTo(CityLogic.GetCities().Count()));
 		}
 
+		[Test]
+		public void AverageCityInCounties_ReturnsCorrectNumberOfValues()
+		{
+			Assert.That(CountryLogic.AverageCityInCounties().Count(), Is.EqualTo(CountryLogic.GetCountries().Count()));
+		}
+
+		[Test]
+		public void AverageCityInCounties_ReturnsCorrectAverageOfValues()
+		{
+			Assert.That(CountryLogic.AverageCityInCounties().Average(x => x.AverageCityCount), Is.EqualTo(3));
+		}
+
 		#region create and get tests
 		[TestCase(-1)]
 		public void GetById_ThrowsException_IfNotFound(int id)
