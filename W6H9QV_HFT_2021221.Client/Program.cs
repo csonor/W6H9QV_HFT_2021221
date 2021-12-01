@@ -289,8 +289,15 @@ namespace W6H9QV_HFT_2021221.Client
 						UserInputCheck<DrivingSide>($"{item.Name,-15}==> "));
 				}
 			}
-			rest.Post(newEntity);
-			Console.WriteLine("\nItem added!\n");
+			bool catched = false;
+			try { rest.Post(newEntity); }
+			catch (Exception ex)
+			{
+				Console.WriteLine("\n" + ex.Message + "\nForeign key could be wrong!\n");
+				catched = true;
+			}
+			if (!catched)
+				Console.WriteLine("\nItem added!\n");
 			PressToGoBack();
 		}
 
@@ -340,8 +347,15 @@ namespace W6H9QV_HFT_2021221.Client
 							UserInputCheck<DrivingSide>($"{item.Name,-15}Now: {item.GetValue(entity),-20}==>"));
 					}
 				}
-				rest.Put(newEntity);
-				Console.WriteLine("\nItem updated!\n");
+				bool catched = false;
+				try { rest.Put(newEntity); }
+				catch (Exception ex)
+				{
+					Console.WriteLine("\n" + ex.Message + "\nForeign key could be wrong!\n");
+					catched = true;
+				}
+				if (!catched)
+					Console.WriteLine("\nItem updated!\n");
 			}
 			PressToGoBack();
 		}
