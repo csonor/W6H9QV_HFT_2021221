@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfClient
+namespace W6H9QV_HFT_2021221.WpfClient
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
