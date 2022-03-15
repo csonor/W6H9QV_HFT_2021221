@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
+using W6H9QV_HFT_2021221.Endpoint.Services;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
 
@@ -12,10 +14,12 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 	public class CityController : ControllerBase
 	{
 		ICityLogic cityLogic;
+		IHubContext<SignalRHub> hub;
 
-		public CityController(ICityLogic cityLogic)
+		public CityController(ICityLogic cityLogic, IHubContext<SignalRHub> hub)
 		{
 			this.cityLogic = cityLogic;
+			this.hub = hub;
 		}
 
 		// GET: api/<CityController>
@@ -45,6 +49,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Post([FromBody] City value)
 		{
 			cityLogic.AddNewCity(value);
+			hub.Clients.All.SendAsync("CityCreated", value);
 		}
 
 		#region HttpPuts
@@ -53,6 +58,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Put([FromBody] City value)
 		{
 			cityLogic.UpdateCity(value);
+			hub.Clients.All.SendAsync("CityUpdated", value);
 		}
 
 		//name
@@ -106,14 +112,18 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
+			var cityToDelete = cityLogic.GetCityBy(id);
 			cityLogic.DeleteCityBy(id);
+			hub.Clients.All.SendAsync("CityDeleted", cityToDelete);
 		}
 
 		[Route("delnm/{name}")]
 		[HttpDelete("{name}")]
 		public void Delete(string name)
 		{
+			var cityToDelete = cityLogic.GetCityBy(name);
 			cityLogic.DeleteCityBy(name);
+			hub.Clients.All.SendAsync("CityDeleted", cityToDelete);
 		}
 	}
 }

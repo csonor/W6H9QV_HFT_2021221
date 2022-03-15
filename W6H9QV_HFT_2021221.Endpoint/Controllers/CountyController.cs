@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
+using W6H9QV_HFT_2021221.Endpoint.Services;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
 
@@ -12,10 +14,12 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 	public class CountyController : ControllerBase
 	{
 		ICountyLogic countyLogic;
+		IHubContext<SignalRHub> hub;
 
-		public CountyController(ICountyLogic countyLogic)
+		public CountyController(ICountyLogic countyLogic, IHubContext<SignalRHub> hub)
 		{
 			this.countyLogic = countyLogic;
+			this.hub = hub;
 		}
 
 		// GET: api/<CountyController>
@@ -45,6 +49,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Post([FromBody] County value)
 		{
 			countyLogic.AddNewCounty(value);
+			hub.Clients.All.SendAsync("CountyCreated", value);
 		}
 
 		#region HttpPuts
@@ -53,6 +58,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Put([FromBody] County value)
 		{
 			countyLogic.UpdateCounty(value);
+			hub.Clients.All.SendAsync("CountyUpdated", value);
 		}
 
 		//district
@@ -121,14 +127,18 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
+			var countyToDelete = countyLogic.GetCountyBy(id);
 			countyLogic.DeleteCountyBy(id);
+			hub.Clients.All.SendAsync("CountyDeleted", countyToDelete);
 		}
 
 		[Route("delnm/{name}")]
 		[HttpDelete("{name}")]
 		public void Delete(string name)
 		{
+			var countyToDelete = countyLogic.GetCountyBy(name);
 			countyLogic.DeleteCountyBy(name);
+			hub.Clients.All.SendAsync("CountyDeleted", countyToDelete);
 		}
 	}
 }

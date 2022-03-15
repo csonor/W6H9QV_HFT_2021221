@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
+using W6H9QV_HFT_2021221.Endpoint.Services;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
 
@@ -12,10 +14,12 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 	public class CountryController : ControllerBase
 	{
 		ICountryLogic countryLogic;
+		IHubContext<SignalRHub> hub;
 
-		public CountryController(ICountryLogic countryLogic)
+		public CountryController(ICountryLogic countryLogic, IHubContext<SignalRHub> hub)
 		{
 			this.countryLogic = countryLogic;
+			this.hub = hub;
 		}
 
 		// GET: api/<CountryController>
@@ -45,6 +49,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Post([FromBody] Country value)
 		{
 			countryLogic.AddNewCountry(value);
+			hub.Clients.All.SendAsync("CountryCreated", value);
 		}
 
 		#region HttpPuts
@@ -53,6 +58,7 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		public void Put([FromBody] Country value)
 		{
 			countryLogic.UpdateCountry(value);
+			hub.Clients.All.SendAsync("CountryUpdated", value);
 		}
 
 		//countrycode
@@ -136,14 +142,18 @@ namespace W6H9QV_HFT_2021221.Endpoint.Controllers
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
+			var countryToDelete = countryLogic.GetCountryBy(id);
 			countryLogic.DeleteCountryBy(id);
+			hub.Clients.All.SendAsync("CountryDeleted", countryToDelete);
 		}
 
 		[Route("delnm/{name}")]
 		[HttpDelete("{name}")]
 		public void Delete(string name)
 		{
+			var countryToDelete = countryLogic.GetCountryBy(name);
 			countryLogic.DeleteCountryBy(name);
+			hub.Clients.All.SendAsync("CountryDeleted", countryToDelete);
 		}
 	}
 }

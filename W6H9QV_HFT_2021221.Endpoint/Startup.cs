@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using W6H9QV_HFT_2021221.Data;
+using W6H9QV_HFT_2021221.Endpoint.Services;
 using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Repository;
 
@@ -24,6 +25,8 @@ namespace W6H9QV_HFT_2021221.Endpoint
 			services.AddTransient<ICountyRepository, CountyRepository>();
 			services.AddTransient<ICityRepository, CityRepository>();
 			services.AddSingleton<DbContext, CountriesDbContext>();
+
+			services.AddSignalR();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +42,7 @@ namespace W6H9QV_HFT_2021221.Endpoint
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapHub<SignalRHub>("/hub");
 			});
 		}
 	}
