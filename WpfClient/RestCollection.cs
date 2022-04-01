@@ -6,13 +6,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MovieDbApp.WpfClient
+namespace W6H9QV_HFT_2021221.WpfClient
 {
-    public class RestService
+	public class RestService
     {
         HttpClient client;
 

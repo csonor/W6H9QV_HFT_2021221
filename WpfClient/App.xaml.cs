@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using W6H9QV_HFT_2021221.Logic;
 
 namespace W6H9QV_HFT_2021221.WpfClient
 {
@@ -13,5 +16,14 @@ namespace W6H9QV_HFT_2021221.WpfClient
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			Ioc.Default.ConfigureServices(
+				new ServiceCollection()
+				.AddSingleton<ICountryLogic, CountryLogic>()
+				.AddSingleton<ICountyLogic, CountyLogic>()
+				.AddSingleton<ICityLogic, CityLogic>()
+				.BuildServiceProvider());
+		}
 	}
 }
