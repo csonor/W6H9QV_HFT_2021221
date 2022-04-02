@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using W6H9QV_HFT_2021221.Models;
-using W6H9QV_HFT_2021221.WpfClient.Services.Interfaces;
+using W6H9QV_HFT_2021221.WpfClient.Services;
 
 namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 {
@@ -26,7 +26,9 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 		private County selectedCounty;
 		private City selectedCity;
 
-		IAddOrEditCountryService addCountryService;
+		IAddOrEditEntityService<Country> addOrEditCountryService;
+		IAddOrEditEntityService<County> addOrEditCountyService;
+		IAddOrEditEntityService<City> addOrEditCityService;
 
 		public RestCollection<Country> Countries { get; set; }
 		public RestCollection<County> Counties { get; set; }
@@ -128,11 +130,15 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			}
 		}
 		public MainWindowViewModel() :
-			this(IsInDesignMode ? null : Ioc.Default.GetService<IAddOrEditCountryService>())
+			this(IsInDesignMode ? null : Ioc.Default.GetService<IAddOrEditEntityService<Country>>(),
+				IsInDesignMode ? null : Ioc.Default.GetService<IAddOrEditEntityService<County>>(),
+				IsInDesignMode ? null : Ioc.Default.GetService<IAddOrEditEntityService<City>>())
 		{
 		}
 
-		public MainWindowViewModel(IAddOrEditCountryService addOrEditCountryService)
+		public MainWindowViewModel(IAddOrEditEntityService<Country> addOrEditCountryService,
+			IAddOrEditEntityService<County> addOrEditCountyService,
+			IAddOrEditEntityService<City> addOrEditCityService)
 		{
 			if (!IsInDesignMode)
 			{
@@ -140,9 +146,11 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 				Counties = new RestCollection<County>("http://localhost:7649/", "county", "hub");
 				Cities = new RestCollection<City>("http://localhost:7649/", "city", "hub");
 			}
-			this.addCountryService = addOrEditCountryService;
-			CreateCountryCommand = new RelayCommand(() => addOrEditCountryService.AddCountry());
-			ModifyCountryCommand = new RelayCommand(() => addOrEditCountryService.EditCountry(SelectedCountry), () => SelectedCountry != null);
+			this.addOrEditCountryService = addOrEditCountryService;
+			this.addOrEditCountyService = addOrEditCountyService;
+			this.addOrEditCityService = addOrEditCityService;
+			CreateCountryCommand = new RelayCommand(() => addOrEditCountryService.Add());
+			ModifyCountryCommand = new RelayCommand(() => addOrEditCountryService.Edit(SelectedCountry), () => SelectedCountry != null);
 			DeleteCountryCommand = new RelayCommand(() => Countries.Delete(SelectedCountry.ID), () => SelectedCountry != null);
 			SelectedCountry = new Country();
 		}

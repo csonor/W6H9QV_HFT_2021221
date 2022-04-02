@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.Windows;
+using W6H9QV_HFT_2021221.Models;
 using W6H9QV_HFT_2021221.WpfClient.Services;
-using W6H9QV_HFT_2021221.WpfClient.Services.Interfaces;
 
 namespace W6H9QV_HFT_2021221.WpfClient
 {
@@ -15,7 +15,9 @@ namespace W6H9QV_HFT_2021221.WpfClient
 		{
 			Ioc.Default.ConfigureServices(
 				new ServiceCollection()
-				.AddSingleton<IAddOrEditCountryService,AddOrEditCountryService>()
+				.AddSingleton<IAddOrEditEntityService<Country>, AddOrEditEntityService<Country>>()
+				.AddSingleton<IAddOrEditEntityService<County>, AddOrEditEntityService<County>>()
+				.AddSingleton<IAddOrEditEntityService<City>, AddOrEditEntityService<City>>()
 				.BuildServiceProvider());
 		}
 	}

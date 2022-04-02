@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using W6H9QV_HFT_2021221.Models;
 
-namespace W6H9QV_HFT_2021221.WpfClient.Services.Interfaces
+namespace W6H9QV_HFT_2021221.WpfClient.Services
 {
-	interface IAddOrEditCountryService
+	interface IAddOrEditEntityService<T>
 	{
-		void AddCountry();
-		void EditCountry(Country country);
+		void Add();
+		void Edit(T item);
 	}
 }
