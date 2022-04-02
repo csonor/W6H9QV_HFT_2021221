@@ -30,7 +30,7 @@
 			</Grid.ColumnDefinitions>
 			<Button Grid.Column="0" Content="Add Country" FontSize="14" Command="{Binding CreateCountryCommand}"/>
 			<Button Grid.Column="1" Content="Add County" FontSize="14" Command="{Binding CreateCountyCommand}"/>
-			<Button Grid.Column="2" Content="Add City" FontSize="14"/>
+			<Button Grid.Column="2" Content="Add City" FontSize="14" Command="{Binding CreateCityCommand}"/>
 		</Grid>
 
 		<Grid Grid.Row="1" Grid.Column="1">
@@ -41,7 +41,7 @@
 			</Grid.ColumnDefinitions>
 			<Button Grid.Column="0" Content="Modify&#x0a;Country" FontSize="14" Command="{Binding ModifyCountryCommand}"/>
 			<Button Grid.Column="1" Content="Modify&#x0a;County" FontSize="14" Command="{Binding ModifyCountyCommand}"/>
-			<Button Grid.Column="2" Content="Modify City" FontSize="14"/>
+			<Button Grid.Column="2" Content="Modify City" FontSize="14" Command="{Binding ModifyCityCommand}"/>
 		</Grid>
 
 		<Grid Grid.Row="1" Grid.Column="2">
@@ -52,7 +52,7 @@
 			</Grid.ColumnDefinitions>
 			<Button Grid.Column="0" Content="Delete&#x0a;Country" FontSize="14" Command="{Binding DeleteCountryCommand}"/>
 			<Button Grid.Column="1" Content="Delete&#x0a;County" FontSize="14" Command="{Binding DeleteCountyCommand}"/>
-			<Button Grid.Column="2" Content="Delete City" FontSize="14"/>
+			<Button Grid.Column="2" Content="Delete City" FontSize="14" Command="{Binding DeleteCityCommand}"/>
 		</Grid>
 
 		<ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}">
