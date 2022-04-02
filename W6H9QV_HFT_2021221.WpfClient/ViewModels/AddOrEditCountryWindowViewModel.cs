@@ -12,22 +12,22 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 	{
 		private Country currentCountry;
 		public Country CurrentCountry { get => currentCountry; set { SetProperty(ref currentCountry, value); } }
-		public RestCollection<Country> Countries { get; set; }
+		private RestCollection<Country> countries;
 
 		public AddOrEditCountryWindowViewModel()
 		{
 			currentCountry = new Country();
-			Countries = new RestCollection<Country>("http://localhost:7649/", "country", "hub");
+			countries = new RestCollection<Country>("http://localhost:7649/", "country", "hub");
 		}
 
 		public void Add()
 		{
-			Countries.Add(currentCountry);
+			countries.Add(CurrentCountry);
 		}
 
 		public void Update(Country country)
 		{
-			Countries.Update(country);
+			countries.Update(country);
 		}
 	}
 }

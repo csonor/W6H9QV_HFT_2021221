@@ -1,0 +1,28 @@
+﻿<Window x:Class="W6H9QV_HFT_2021221.WpfClient.Windows.AddOrEditCountyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:W6H9QV_HFT_2021221.WpfClient.Windows"
+		xmlns:vms="clr-namespace:W6H9QV_HFT_2021221.WpfClient.ViewModels"
+        mc:Ignorable="d"
+        Title="AddOrEditCountyWindow" Height="550" Width="300">
+	<Window.DataContext>
+		<vms:AddOrEditCountyWindowViewModel/>
+	</Window.DataContext>
+	<Grid>
+		<StackPanel DataContext="{Binding CurrentCounty}">
+			<Label Content="Name" Padding="10" Background="LightBlue" FontSize="14"/>
+			<TextBox Text="{Binding Name}" FontSize="14" Padding="10"/>
+			<Label Content="Population" Padding="10" Background="LightBlue" FontSize="14"/>
+			<TextBox Text="{Binding Population}" FontSize="14" Padding="10"/>
+			<Label Content="County Seat" Padding="10" Background="LightBlue" FontSize="14"/>
+			<TextBox Text="{Binding CountySeat}" FontSize="14" Padding="10"/>
+			<Label Content="Districts" Padding="10" Background="LightBlue" FontSize="14"/>
+			<TextBox Text="{Binding Districts}" FontSize="14" Padding="10"/>
+			<Label Content="Country ID" Padding="10" Background="LightBlue" FontSize="14"/>
+			<TextBox Text="{Binding CountryID}" FontSize="14" Padding="10"/>
+			<Button Content="Save" Padding="10" FontSize="14" Click="Button_Click"/>
+		</StackPanel>
+	</Grid>
+</Window>

@@ -14,7 +14,8 @@ namespace W6H9QV_HFT_2021221.WpfClient.Services
 		{
 			if (typeof(T) == typeof(Country))
 				new AddOrEditCountryWindow().ShowDialog();
-			//else if (typeof(T) == typeof(County))
+			else if (typeof(T) == typeof(County))
+				new AddOrEditCountyWindow().ShowDialog();
 			//	else if (typeof(T) == typeof(City))
 		}
 
@@ -22,7 +23,8 @@ namespace W6H9QV_HFT_2021221.WpfClient.Services
 		{
 			if (typeof(T) == typeof(Country))
 				new AddOrEditCountryWindow(item as Country).ShowDialog();
-			//else if (typeof(T) == typeof(County))
+			else if (typeof(T) == typeof(County))
+				new AddOrEditCountyWindow(item as County).ShowDialog();
 			//	else if (typeof(T) == typeof(City))
 
 

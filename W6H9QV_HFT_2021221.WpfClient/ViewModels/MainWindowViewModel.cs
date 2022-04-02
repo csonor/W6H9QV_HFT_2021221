@@ -146,13 +146,21 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 				Counties = new RestCollection<County>("http://localhost:7649/", "county", "hub");
 				Cities = new RestCollection<City>("http://localhost:7649/", "city", "hub");
 			}
+			
 			this.addOrEditCountryService = addOrEditCountryService;
 			this.addOrEditCountyService = addOrEditCountyService;
 			this.addOrEditCityService = addOrEditCityService;
+
 			CreateCountryCommand = new RelayCommand(() => addOrEditCountryService.Add());
 			ModifyCountryCommand = new RelayCommand(() => addOrEditCountryService.Edit(SelectedCountry), () => SelectedCountry != null);
 			DeleteCountryCommand = new RelayCommand(() => Countries.Delete(SelectedCountry.ID), () => SelectedCountry != null);
+
+			CreateCountyCommand = new RelayCommand(() => addOrEditCountyService.Add());
+			ModifyCountyCommand = new RelayCommand(() => addOrEditCountyService.Edit(SelectedCounty), () => SelectedCounty != null);
+			DeleteCountyCommand = new RelayCommand(() => Counties.Delete(SelectedCounty.ID), () => SelectedCounty != null);
+
 			SelectedCountry = new Country();
+			SelectedCounty = new County();
 		}
 	}
 }
