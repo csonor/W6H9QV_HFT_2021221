@@ -7,8 +7,9 @@ using W6H9QV_HFT_2021221.Models;
 
 namespace W6H9QV_HFT_2021221.WpfClient.Services.Interfaces
 {
-	internal interface IAddCountryService
+	interface IAddOrEditCountryService
 	{
-		Country? AddCountry();
+		void AddCountry();
+		void EditCountry(Country country);
 	}
 }

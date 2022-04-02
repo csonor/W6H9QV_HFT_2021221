@@ -9,16 +9,16 @@ using W6H9QV_HFT_2021221.WpfClient.Windows;
 
 namespace W6H9QV_HFT_2021221.WpfClient.Services
 {
-	class AddCountryService : IAddCountryService
+	class AddOrEditCountryService : IAddOrEditCountryService
 	{
-		public Country? AddCountry()
+		public void AddCountry()
 		{
-			AddCountryWindow addCountryWindow = new AddCountryWindow();
-			if (addCountryWindow.ShowDialog() == true)
-			{
-				return addCountryWindow.Country;
-			}
-			return null;
+			new AddOrEditCountryWindow().ShowDialog();
+		}
+
+		public void EditCountry(Country country)
+		{
+			new AddOrEditCountryWindow(country).ShowDialog();
 		}
 	}
 }

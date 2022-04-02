@@ -39,7 +39,7 @@
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
-			<Button Grid.Column="0" Content="Modify&#x0a;Country" FontSize="14"/>
+			<Button Grid.Column="0" Content="Modify&#x0a;Country" FontSize="14" Command="{Binding ModifyCountryCommand}"/>
 			<Button Grid.Column="1" Content="Modify&#x0a;County" FontSize="14"/>
 			<Button Grid.Column="2" Content="Modify City" FontSize="14"/>
 		</Grid>
@@ -50,7 +50,7 @@
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
-			<Button Grid.Column="0" Content="Delete&#x0a;Country" FontSize="14"/>
+			<Button Grid.Column="0" Content="Delete&#x0a;Country" FontSize="14" Command="{Binding DeleteCountryCommand}"/>
 			<Button Grid.Column="1" Content="Delete&#x0a;County" FontSize="14"/>
 			<Button Grid.Column="2" Content="Delete City" FontSize="14"/>
 		</Grid>

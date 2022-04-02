@@ -26,7 +26,7 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 		private County selectedCounty;
 		private City selectedCity;
 
-		IAddCountryService addCountryService;
+		IAddOrEditCountryService addCountryService;
 
 		public RestCollection<Country> Countries { get; set; }
 		public RestCollection<County> Counties { get; set; }
@@ -52,6 +52,10 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 				selectedCounty = null;
 				if (value != null)
 				{
+					if (value.CountryCode == null)
+						value.CountryCode = "";
+					if (value.Currency == null)
+						value.Currency = "";
 					selectedCountry = new Country()
 					{
 						Name = value.Name,
@@ -124,11 +128,11 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			}
 		}
 		public MainWindowViewModel() :
-			this(IsInDesignMode ? null : Ioc.Default.GetService<IAddCountryService>())
+			this(IsInDesignMode ? null : Ioc.Default.GetService<IAddOrEditCountryService>())
 		{
 		}
 
-		public MainWindowViewModel(IAddCountryService addCountryService)
+		public MainWindowViewModel(IAddOrEditCountryService addOrEditCountryService)
 		{
 			if (!IsInDesignMode)
 			{
@@ -136,8 +140,11 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 				Counties = new RestCollection<County>("http://localhost:7649/", "county", "hub");
 				Cities = new RestCollection<City>("http://localhost:7649/", "city", "hub");
 			}
-			this.addCountryService = addCountryService;
-			CreateCountryCommand = new RelayCommand(() => addCountryService.AddCountry());
+			this.addCountryService = addOrEditCountryService;
+			CreateCountryCommand = new RelayCommand(() => addOrEditCountryService.AddCountry());
+			ModifyCountryCommand = new RelayCommand(() => addOrEditCountryService.EditCountry(SelectedCountry), () => SelectedCountry != null);
+			DeleteCountryCommand = new RelayCommand(() => Countries.Delete(SelectedCountry.ID), () => SelectedCountry != null);
+			SelectedCountry = new Country();
 		}
 	}
 }

@@ -183,7 +183,7 @@ namespace W6H9QV_HFT_2021221.WpfClient
         public async Task DeleteAsync(int id, string endpoint)
         {
             HttpResponseMessage response =
-                await client.DeleteAsync(endpoint + "/" + id.ToString());
+                await client.DeleteAsync(endpoint + "/delid/" + id.ToString());
 
             if (!response.IsSuccessStatusCode)
             {

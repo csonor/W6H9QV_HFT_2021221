@@ -15,7 +15,7 @@ namespace W6H9QV_HFT_2021221.WpfClient
 		{
 			Ioc.Default.ConfigureServices(
 				new ServiceCollection()
-				.AddSingleton<IAddCountryService,AddCountryService>()
+				.AddSingleton<IAddOrEditCountryService,AddOrEditCountryService>()
 				.BuildServiceProvider());
 		}
 	}

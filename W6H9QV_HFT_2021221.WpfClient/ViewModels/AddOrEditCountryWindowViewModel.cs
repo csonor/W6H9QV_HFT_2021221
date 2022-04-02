@@ -8,21 +8,26 @@ using W6H9QV_HFT_2021221.Models;
 
 namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 {
-	class AddCountryWindowViewModel : ObservableRecipient
+	class AddOrEditCountryWindowViewModel : ObservableRecipient
 	{
-		private Country addedCountry;
-		public Country AddedCountry { get => addedCountry; set { SetProperty(ref addedCountry, value); } }
+		private Country currentCountry;
+		public Country CurrentCountry { get => currentCountry; set { SetProperty(ref currentCountry, value); } }
 		public RestCollection<Country> Countries { get; set; }
 
-		public AddCountryWindowViewModel()
+		public AddOrEditCountryWindowViewModel()
 		{
-			addedCountry = new Country();
+			currentCountry = new Country();
 			Countries = new RestCollection<Country>("http://localhost:7649/", "country", "hub");
 		}
 
 		public void Add()
 		{
-			Countries.Add(addedCountry);
+			Countries.Add(currentCountry);
+		}
+
+		public void Update(Country country)
+		{
+			Countries.Update(country);
 		}
 	}
 }
