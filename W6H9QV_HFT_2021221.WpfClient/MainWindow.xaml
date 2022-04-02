@@ -28,7 +28,7 @@
 				<ColumnDefinition Width="1*"/>
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
-			<Button Grid.Column="0" Content="Add Country" FontSize="14"/>
+			<Button Grid.Column="0" Content="Add Country" FontSize="14" Command="{Binding CreateCountryCommand}"/>
 			<Button Grid.Column="1" Content="Add County" FontSize="14"/>
 			<Button Grid.Column="2" Content="Add City" FontSize="14"/>
 		</Grid>

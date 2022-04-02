@@ -6,8 +6,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using W6H9QV_HFT_2021221.Logic;
 using W6H9QV_HFT_2021221.Models;
+using W6H9QV_HFT_2021221.WpfClient.Services.Interfaces;
 
 namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 {
@@ -26,9 +26,7 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 		private County selectedCounty;
 		private City selectedCity;
 
-		private ICountryLogic countryLogic;
-		private ICountyLogic countyLogic;
-		private ICityLogic cityLogic;
+		IAddCountryService addCountryService;
 
 		public RestCollection<Country> Countries { get; set; }
 		public RestCollection<County> Counties { get; set; }
@@ -126,24 +124,20 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			}
 		}
 		public MainWindowViewModel() :
-			this(IsInDesignMode ? null : Ioc.Default.GetService<ICountryLogic>(),
-			IsInDesignMode ? null : Ioc.Default.GetService<ICountyLogic>(),
-			IsInDesignMode ? null : Ioc.Default.GetService<ICityLogic>())
+			this(IsInDesignMode ? null : Ioc.Default.GetService<IAddCountryService>())
 		{
 		}
 
-		public MainWindowViewModel(ICountryLogic countryLogic, ICountyLogic countyLogic, ICityLogic cityLogic)
+		public MainWindowViewModel(IAddCountryService addCountryService)
 		{
-			this.countryLogic = countryLogic;
-			this.countyLogic = countyLogic;
-			this.cityLogic = cityLogic;
 			if (!IsInDesignMode)
 			{
 				Countries = new RestCollection<Country>("http://localhost:7649/", "country", "hub");
 				Counties = new RestCollection<County>("http://localhost:7649/", "county", "hub");
 				Cities = new RestCollection<City>("http://localhost:7649/", "city", "hub");
 			}
-			//CreateCountryCommand = new RelayCommand(() => )
+			this.addCountryService = addCountryService;
+			CreateCountryCommand = new RelayCommand(() => addCountryService.AddCountry());
 		}
 	}
 }

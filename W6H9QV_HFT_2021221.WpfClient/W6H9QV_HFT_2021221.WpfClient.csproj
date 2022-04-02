@@ -14,12 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\W6H9QV_HFT_2021221.Logic\W6H9QV_HFT_2021221.Logic.csproj" />
 		<ProjectReference Include="..\W6H9QV_HFT_2021221.Models\W6H9QV_HFT_2021221.Models.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

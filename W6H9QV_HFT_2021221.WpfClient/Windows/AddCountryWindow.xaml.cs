@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using W6H9QV_HFT_2021221.Models;
+using W6H9QV_HFT_2021221.WpfClient.ViewModels;
 
 namespace W6H9QV_HFT_2021221.WpfClient.Windows
 {
@@ -20,12 +21,17 @@ namespace W6H9QV_HFT_2021221.WpfClient.Windows
 	/// </summary>
 	public partial class AddCountryWindow : Window
 	{
-		public Country Actual { get; set; }
+		public Country Country { get => ((AddCountryWindowViewModel)DataContext).AddedCountry; }
 
 		public AddCountryWindow()
 		{
 			InitializeComponent();
-			DataContext = Actual;
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			((AddCountryWindowViewModel)DataContext).Add();
+			DialogResult = true;
 		}
 	}
 }

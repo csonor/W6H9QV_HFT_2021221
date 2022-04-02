@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{51CB0D
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W6H9QV_HFT_2021221.WpfClient", "WpfClient\W6H9QV_HFT_2021221.WpfClient.csproj", "{71254CE5-1AEB-4FD1-8582-FD9D91B0990C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W6H9QV_HFT_2021221.WpfClient", "W6H9QV_HFT_2021221.WpfClient\W6H9QV_HFT_2021221.WpfClient.csproj", "{71254CE5-1AEB-4FD1-8582-FD9D91B0990C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
