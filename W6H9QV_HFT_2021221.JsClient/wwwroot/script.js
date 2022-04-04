@@ -17,10 +17,15 @@ function display() {
 			+ x.countryCode + "</td><td>"
 			+ x.population + "</td><td>"
 			+ x.currency + "</td><td>"
-			+ x.drivingSide + "</td></tr>";
+			+ x.drivingSide + "</td><td>"
+			+ `<button type="button"onclick="remove(${x.id})">Delete</button>` + "</td></tr>";
 	})
 }
 
 function create() {
 	let name = document.getElementById('countryName')
+}
+
+function remove(id) {
+	alert(id);
 }

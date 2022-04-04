@@ -31,3 +31,7 @@ th {
 #formCountry {
 	font-weight: bolder;
 }
+
+table button {
+	padding: 2px;
+}
