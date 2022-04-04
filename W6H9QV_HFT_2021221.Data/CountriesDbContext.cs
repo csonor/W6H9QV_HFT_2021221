@@ -19,7 +19,7 @@ namespace W6H9QV_HFT_2021221.Data
 			if (!optionsBuilder.IsConfigured)
 				optionsBuilder
 					.UseLazyLoadingProxies()
-					.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True");
+					.UseSqlServer(@"Data Source=(LocalDB)\mssqllocaldb;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
