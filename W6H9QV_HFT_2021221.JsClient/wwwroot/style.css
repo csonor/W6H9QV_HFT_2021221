@@ -1,2 +1,33 @@
-﻿body {
+﻿table {
+	width: 70%;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+
+th {
+	background-color: lightblue;
+}
+
+#formCountry {
+	display: flex;
+	flex-direction: column;
+}
+
+	#formCountry label, button, input {
+		margin: 10px;
+		padding: 5px;
+	}
+
+#formCountry {
+	font-weight: bolder;
 }
