@@ -64,7 +64,7 @@ namespace W6H9QV_HFT_2021221.Data
 			City leob = new City() { ID = 12, Name = "Leoben", Population = 24645, Elevation = 541, Area = 107.77, CountyID = styr.ID };
 
 
-			Country austr = new Country() { ID = 3, Name = "Australia", EnglishName = "Australia", CountryCode = "au", Currency = "aud", DrivingSide = DrivingSide.left, Population = 2590190 };
+			Country austr = new Country() { ID = 3, Name = "Australia", EnglishName = "Australia", CountryCode = "au", Currency = "aud", DrivingSide = DrivingSide.left, Population = 25901900 };
 
 			County vic = new County() { ID = 5, Name = "Victoria", Population = 6648564, CountySeat = "Melbourne", Districts = 79, CountryID = austr.ID };
 
