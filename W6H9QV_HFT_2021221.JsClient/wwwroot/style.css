@@ -1,5 +1,5 @@
 ﻿table {
-	width: 70%;
+	width: 85%;
 }
 
 table, th, td {
@@ -18,17 +18,18 @@ th {
 	background-color: lightblue;
 }
 
-#formCountry {
+#formdiv {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
 
-	#formCountry label, button, input {
-		margin: 10px;
-		padding: 5px;
-	}
+#formdiv, label, button, input {
+	margin: 10px;
+	padding: 3px;
+	width: 85%;
+}
 
-#formCountry {
+#formdiv, label {
 	font-weight: bolder;
 }
 
