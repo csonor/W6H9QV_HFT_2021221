@@ -55,21 +55,21 @@
 			<Button Grid.Column="2" Content="Delete City" FontSize="14" Command="{Binding DeleteCityCommand}"/>
 		</Grid>
 
-		<ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}">
+		<ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Countries,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCountry}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Label Content="{Binding Name}" Padding="10"/>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<ListBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListSelectedCounties}" SelectedItem="{Binding SelectedCounty}">
+		<ListBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListSelectedCounties,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCounty}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Label Content="{Binding Name}" Padding="10"/>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		<ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding ListSelectedCities}" SelectedItem="{Binding SelectedCity}">
+		<ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding ListSelectedCities,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCity}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Label Content="{Binding Name}" Padding="10"/>
