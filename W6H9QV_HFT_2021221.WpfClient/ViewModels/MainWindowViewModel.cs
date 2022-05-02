@@ -51,6 +51,8 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			get { return selectedCountry; }
 			set
 			{
+				((RelayCommand)ModifyCountryCommand).NotifyCanExecuteChanged();
+				((RelayCommand)DeleteCountryCommand).NotifyCanExecuteChanged();
 				selectedCounty = null;
 				if (value != null)
 				{
@@ -80,6 +82,8 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			get { return selectedCounty; }
 			set
 			{
+				((RelayCommand)ModifyCountyCommand).NotifyCanExecuteChanged();
+				((RelayCommand)DeleteCountyCommand).NotifyCanExecuteChanged();
 				if (value != null)
 				{
 					selectedCounty = new County()
@@ -103,6 +107,8 @@ namespace W6H9QV_HFT_2021221.WpfClient.ViewModels
 			get { return selectedCity; }
 			set
 			{
+				((RelayCommand)ModifyCityCommand).NotifyCanExecuteChanged();
+				((RelayCommand)DeleteCityCommand).NotifyCanExecuteChanged();
 				if (value != null)
 				{
 					selectedCity = new City()
